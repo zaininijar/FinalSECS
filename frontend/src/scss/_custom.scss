@@ -1,1 +1,116 @@
 // Here you can add other styles
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap');
+
+.cs-bg-dark {
+    background-color: $black;
+}
+
+.border-r {
+    border-right: 1px solid gray;
+}
+
+.montserrat {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.circle-gradient {
+    background-image: linear-gradient(to right, #00ffee, #005eff);
+    border-radius: 50%;
+}
+
+.bg-gradient-primary {
+    background-image: linear-gradient(to right, #00ffee, #005eff);
+}
+
+.btn-gradient-primary {
+    &:hover {
+        background-image: linear-gradient(to right, #00ffee, #0e429c);
+        border: 1px solid #00ffee;
+    }
+    border: 1px solid #00ffee;
+    background-image: linear-gradient(to right, #00ffee, #005eff);
+}
+
+.btn-gradient-outline-primary {
+    border: double 1px transparent !important;
+    border-radius: 8px;
+    display: inline-block;
+    background-image: linear-gradient($black, $black), linear-gradient(to right, #005eff, #00ffee);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    padding: 0;
+    text-decoration: none;
+    color: white;
+
+    .child {
+        margin: 8px 24px;
+        font-size: 16px;
+    }
+
+    &:hover {
+        background-image: linear-gradient(to right, #0e429c, #00ffee), linear-gradient(to right, #00ffee, #005eff);
+        color: white;
+        border: 1px solid #0e429c;
+    }
+}
+
+.sz-100 {
+    height: 100px;
+    width: 100px;
+}
+
+.sz-200 {
+    height: 200px;
+    width: 200px;
+}
+
+.sz-300 {
+    height: 300px;
+    width: 300px;
+}
+
+.no-wrap {
+    white-space: nowrap;
+}
+
+.right-0 {
+    right: 0;
+}
+
+.top-0 {
+    top: 0;
+}
+
+.bottom-0 {
+    bottom: 0;
+}
+
+.text-xs {
+    font-size: 10px;
+}
+
+@media (max-width: 768px) {
+    .mobile-none {
+        display: none;
+    }
+    .mobile-text-center {
+        text-align: center;
+    }
+    .mobile-text-xs {
+        font-size: 10px;
+    }
+}
+
+.cs-input-dark {
+    background-color: rgb(50, 54, 68);
+    border-color: rgb(50, 54, 68);
+    color: rgb(171, 163, 163);
+    &:focus {
+        color: rgb(208, 199, 199);
+        border-color: #00ffee;
+        background-color: rgb(62, 64, 74);
+    }
+    &.border-danger {
+        border-color: rgb(213, 65, 60);
+    }
+}
