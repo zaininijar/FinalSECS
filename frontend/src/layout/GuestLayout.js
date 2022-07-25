@@ -5,11 +5,9 @@ import { AppFooter, GuestNav } from "../components/index";
 const GuestLayout = ({ children }) => {
   return (
     <div>
-      <div className="wrapper d-flex flex-column min-vh-100 bg-gradient-primary">
+      <div className="wrapper d-flex flex-column min-vh-100 cs-bg-dark text-light">
         <GuestNav />
-        <div className="body flex-grow-1 px-3">
-          <CContainer>{children}</CContainer>
-        </div>
+        <div className="body flex-grow-1 px-3">{children}</div>
       </div>
     </div>
   );

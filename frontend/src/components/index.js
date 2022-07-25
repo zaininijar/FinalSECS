@@ -8,6 +8,9 @@ import DocsCallout from "./DocsCallout";
 import DocsLink from "./DocsLink";
 import DocsExample from "./DocsExample";
 import GuestNav from "./guest/GuestNav";
+import Circle from "./guest/Circle";
+import GradientButton from "./guest/GradientButton";
+import MsgInputError from "./form/MsgInputError";
 
 export {
   AppBreadcrumb,
@@ -20,4 +23,7 @@ export {
   DocsLink,
   DocsExample,
   GuestNav,
+  Circle,
+  GradientButton,
+  MsgInputError,
 };

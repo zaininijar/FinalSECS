@@ -1,22 +1,20 @@
 import React from "react";
-import {
-  CButton,
-  CContainer,
-  CForm,
-  CFormInput,
-  CNavbar,
-  CNavbarBrand,
-} from "@coreui/react";
+import { CContainer, CNavbar, CNavbarBrand } from "@coreui/react";
+import GradientButton from "./GradientButton";
+import { Link } from "react-router-dom";
 
 const GuestNav = () => {
   return (
     <>
-      <CNavbar colorScheme="light">
-        <CContainer>
+      <CNavbar colorScheme="dark" className="py-4">
+        <CContainer className="px-4 md-px-0">
           <CNavbarBrand href="#">We-App</CNavbarBrand>
-          <CButton color="primary" variant="outline" className="me-2">
-            Sign In
-          </CButton>
+          <Link to="/welcome" className="text-light">
+            Home
+          </Link>
+          <GradientButton href="/login">
+            <div className="small">Sign In</div>
+          </GradientButton>
         </CContainer>
       </CNavbar>
     </>
