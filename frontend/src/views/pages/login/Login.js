@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import {
   CButton,
   CCol,
@@ -12,9 +11,11 @@ import {
 import { Circle, GradientButton, MsgInputError } from "src/components";
 import GuestLayout from "src/layout/GuestLayout";
 import axios from "src/api/axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const LOGIN_URL = "/auth/signin";
+  const navigate = useNavigate();
   const [inputType, setInputType] = useState("password");
   const [username, setUsername] = useState({ msgErr: "", value: "" });
   const [password, setPassword] = useState({ msgErr: "", value: "" });
@@ -28,7 +29,9 @@ const Login = () => {
         password: password.value,
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res.data.access_token);
+        localStorage.setItem("token", "Bearer " + res.data.access_token);
+        navigate("/dashboard");
       })
       .catch((err) => {
         setErrResp(err.response.data);
@@ -81,7 +84,6 @@ const Login = () => {
                           : "cs-input-dark"
                       }
                       type="text"
-                      size="md"
                       onChange={(e) => {
                         handleUsername(e.target.value);
                       }}
@@ -114,7 +116,6 @@ const Login = () => {
                           : "cs-input-dark"
                       }
                       type={inputType}
-                      size="md"
                       onChange={(e) => {
                         hanldePassword(e.target.value);
                       }}
@@ -159,7 +160,7 @@ const Login = () => {
                   )}
                 </CCol>
               </CRow>
-              <div class="mt-5">
+              <div className="mt-5">
                 <CButton
                   color="primary"
                   onClick={handleSubmit}
