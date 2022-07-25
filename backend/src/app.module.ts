@@ -6,6 +6,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { DosenModule } from './dosen/dosen.module';
 import { MahasiswaModule } from './mahasiswa/mahasiswa.module';
 import { JurusanModule } from './jurusan/jurusan.module';
+import { KelasModule } from './kelas/kelas.module';
+import { MatkulModule } from './matkul/matkul.module';
 
 @Module({
   imports: [
@@ -14,7 +16,7 @@ import { JurusanModule } from './jurusan/jurusan.module';
     }),
     AuthModule, 
     UserModule,  
-    PrismaModule, DosenModule, MahasiswaModule, JurusanModule,
+    PrismaModule, DosenModule, MahasiswaModule, JurusanModule, KelasModule, MatkulModule,
   ],
 })
 export class AppModule {}
