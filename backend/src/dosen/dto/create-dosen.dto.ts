@@ -1,24 +1,19 @@
-import { IsInt, IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsNotEmpty, IsString } from "class-validator";
 
-export class MahasiswaDto{
+export class CreateDosenDto{
     @IsString()
     @IsNotEmpty()
     username: string;
-    
+
     @IsString()
     @IsNotEmpty()
     password: string;
 
     @IsString()
     @IsNotEmpty()
-    nim: string;
+    nip: string;
 
     @IsString()
     @IsNotEmpty()
     name: string;
-
-    @IsInt()
-    @IsNotEmpty()
-    kelas_id: number;
-
 }

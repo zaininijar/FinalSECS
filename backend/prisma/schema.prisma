@@ -24,7 +24,6 @@ model User{
   admin Admin[]
   dosen Dosen[]
   mahasiswa Mahasiswa[]
-  @@map("users")
 }
 
 model Admin{
@@ -36,15 +35,13 @@ model Admin{
   updatedAt DateTime @updatedAt
 
   user User @relation(fields: [user_id], references: [id])
-
-  @@map("admin")
 }
 
 model Dosen{
   id Int @id @default(autoincrement())
   user_id Int
 
-  nip String
+  nip String @unique
   name String
 
   createdAt DateTime @default(now())
@@ -52,7 +49,7 @@ model Dosen{
 
   user User @relation(fields: [user_id], references: [id])
 
-  @@map("dosen")
+  jadwal Jadwal[]
 }
 
 model Mahasiswa{
@@ -60,13 +57,102 @@ model Mahasiswa{
   user_id Int
   kelas_id Int
 
-  nim String
+  nim String @unique
   name String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   user User @relation(fields: [user_id], references: [id])
-
-  @@map("mahasiswa")
+  matkulmahasiswa MatakuliahMahasiswa[]
 }
+
+model Jurusan {
+  id Int @id @default(autoincrement())
+  nama_jurusan String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  kelas Kelas[]
+  matakuliah Matakuliah[]
+}
+
+model Kelas {
+  id Int @id @default(autoincrement())
+  jurusan_id Int
+
+  nama_kelas String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  jurusan Jurusan @relation(fields: [jurusan_id], references: [id])
+
+  jadwal Jadwal[]
+}
+
+model Matakuliah {
+  id Int @id @default(autoincrement())
+  jurusan_id Int
+
+  kode_matakuliah String
+  nama_matakuliah String
+  semester String?
+  sks String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  jurusan Jurusan @relation(fields: [jurusan_id], references: [id])
+
+  jadwal Jadwal[]
+  matkulmahasiswa MatakuliahMahasiswa[]
+}
+
+model Jadwal {
+  id Int @id @default(autoincrement())
+  dosen_id Int
+  matkul_id Int
+  kelas_id Int
+  tapel_id Int
+
+  hari String
+  jam_mulai DateTime @db.Time()
+  jam_selesai DateTime @db.Time()
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  dosen Dosen @relation(fields: [dosen_id], references: [id])
+  matkul Matakuliah @relation(fields: [matkul_id], references: [id])
+  kelas Kelas @relation(fields: [kelas_id], references: [id])
+  tapel TahunPelajaran @relation(fields: [tapel_id], references: [id])
+
+}
+
+model MatakuliahMahasiswa{
+  id Int @id @default(autoincrement())
+  mahasiswa_id Int
+  matkul_id Int
+  semester Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  mahasiswa Mahasiswa @relation(fields: [mahasiswa_id], references: [id])
+  matkul Matakuliah @relation(fields: [matkul_id], references: [id])
+
+}
+
+model TahunPelajaran{
+  id Int @id @default(autoincrement())
+  tahun_pelajaran Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  jadwal Jadwal[]
+}
+

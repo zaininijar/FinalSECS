@@ -1,1 +1,2 @@
-export * from './dosen.dto'
+export * from './create-dosen.dto'
+export * from './edit-dosen.dto'
