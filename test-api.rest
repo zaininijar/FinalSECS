@@ -1,0 +1,45 @@
+### admin signup
+POST http://localhost:3000/auth/signup
+content-type: application/json
+
+{
+    "username": "admin",
+    "password": "secret123"
+}
+
+### signin
+POST http://localhost:3000/auth/signin
+content-type: application/json
+
+{
+    "username": "admin",
+    "password": "secret123"
+}
+
+###user profile
+GET http://localhost:3000/users/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg2NDMzMjEsImV4cCI6MTY1ODY0NTEyMX0.RK6SHDnVKpT1TRhBZm0Qukia_KyYeq_LrYpqVCSI9rE
+
+###create dosen 
+POST http://localhost:3000/dosen
+content-type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg2NDMzMjEsImV4cCI6MTY1ODY0NTEyMX0.RK6SHDnVKpT1TRhBZm0Qukia_KyYeq_LrYpqVCSI9rE
+{
+    "username": "dosen 2",
+    "password": "secret123",
+    "nip": "123244534",
+    "name": "dosen 2 name"
+}
+
+###create mahasiswa 
+POST http://localhost:3000/mahasiswa
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg2NDMzMjEsImV4cCI6MTY1ODY0NTEyMX0.RK6SHDnVKpT1TRhBZm0Qukia_KyYeq_LrYpqVCSI9rE
+content-type: application/json
+
+{
+    "username": "mahasiswa 1",
+    "password": "secret123",
+    "nim": "123244534",
+    "name": "mahasiswa 1 name",
+    "kelas_id": 1
+}
