@@ -1,5 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Res} from "@nestjs/common";
-import { Response } from "express"
+import { Body, Controller, HttpCode, HttpStatus, Post, Req} from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { AuthDto } from "./dto";
 
@@ -14,7 +13,13 @@ export class AuthController{
 
     @HttpCode(HttpStatus.OK)
     @Post('signin')
-    signin( @Body() dto: AuthDto, @Res({passthrough: true}) response: Response){
-        return this.authService.signin(dto, response);
+    signin( @Body() dto: AuthDto){
+        return this.authService.signin(dto);
     }
+
+    // @HttpCode(HttpStatus.OK)
+    // @Get('token')
+    // token(request: Req){
+    //     return this.authService.token(request);
+    // }
 }

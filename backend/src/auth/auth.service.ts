@@ -5,7 +5,6 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import * as argon from 'argon2';
 import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
-import { Response } from "express";
 
 @Injectable({})
 export class AuthService{
@@ -49,7 +48,7 @@ export class AuthService{
         }
     }
 
-    async signin(dto: AuthDto, response: Response){
+    async signin(dto: AuthDto){
         // find the user by username
         const user = await this.Prisma.user.findUnique({
             where: {
@@ -68,10 +67,29 @@ export class AuthService{
         if(!pwMatches) throw new ForbiddenException("Credentials incorrect");
 
         const token = await this.signToken(user.id, user.username)
-        const frontendDomain = this.config.get<string>('FRONTEND_DOMAIN')
+        return token
+    }
 
-        response.cookie('jwt', token, {httpOnly: true, domain: frontendDomain,});
-        return {'jwt': token}
+    async token(dto: AuthDto){
+        // find the user by username
+        const user = await this.Prisma.user.findUnique({
+            where: {
+                username: dto.username,
+            }
+        })
+        // if user does not exist throw exception
+        if(!user) throw new ForbiddenException("Credentials incorrect");
+        
+        // compare password
+        const pwMatches = await argon.verify(
+            user.password,
+            dto.password
+        );
+        // if password incorrect throw exception
+        if(!pwMatches) throw new ForbiddenException("Credentials incorrect");
+
+        const token = await this.signToken(user.id, user.username)
+        return token
     }
 
     async signToken(userId: number,username: string): Promise<{access_token: string}>{
@@ -80,16 +98,25 @@ export class AuthService{
             username
         };
 
-        const secret = this.config.get('JWT_SECRET')
+        const accessTokenSecret = this.config.get('JWT_SECRET')
+        const refreshTokenSecret = this.config.get('REFRESH_TOKEN_SECRET')
         
-        const token = await this.jwt.signAsync(payload, {
-            expiresIn: '30m',
-            secret: secret
+        const accessToken = await this.jwt.signAsync(payload, {
+            expiresIn: '20s',
+            secret: accessTokenSecret
         })
 
-        return {
-            access_token: token 
+        const refreshToken = await this.jwt.signAsync(payload, {
+            expiresIn: '1d',
+            secret: refreshTokenSecret
+        })
+
+        let token = {
+            access_token: accessToken,
+            refresh_token: refreshToken
         }
+
+        return token
 
     }
 }
