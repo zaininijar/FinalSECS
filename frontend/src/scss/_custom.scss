@@ -114,3 +114,21 @@
         border-color: rgb(213, 65, 60);
     }
 }
+
+.cs-input-light {
+    background-color: white;
+    border-color: white;
+    color: rgb(171, 163, 163);
+    &:focus {
+        color: rgb(208, 199, 199);
+        border-color: #00ffee;
+        background-color: gray;
+    }
+    &.border-danger {
+        border-color: rgb(213, 65, 60);
+    }
+}
+
+.capitalize {
+    text-transform: capitalize;
+}

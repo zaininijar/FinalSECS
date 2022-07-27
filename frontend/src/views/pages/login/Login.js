@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CButton,
   CCol,
@@ -49,12 +49,14 @@ const Login = () => {
         password: password.value,
       })
       .then((res) => {
-        const token = res.data.jwt.access_token;
+        const token = res.data.access_token;
         localStorage.setItem("token", token);
-        getUser(token);
-        navigate("/dashboard");
+        getUser(token).then(() => {
+          navigate("/dashboard");
+        });
       })
       .catch((err) => {
+        console.log(err);
         setErrResp(err.response.data);
       });
   };
@@ -82,6 +84,7 @@ const Login = () => {
       setInputType("password");
     }
   };
+
   return (
     <>
       <GuestLayout>

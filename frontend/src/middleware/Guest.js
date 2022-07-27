@@ -4,9 +4,10 @@ import { useAuthenticated } from "src/store/index";
 
 export const Guest = (props) => {
   const [authenticated, setAuthenticated] = useAuthenticated();
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   useEffect(() => {
-    if (authenticated.check) {
+    if (token) {
       navigate("/dashboard");
     }
   }, []);
