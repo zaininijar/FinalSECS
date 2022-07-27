@@ -58,17 +58,6 @@ import { useNavigate } from "react-router-dom";
 const Dashboard = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    checkToken();
-  });
-
-  const checkToken = () => {
-    if (typeof localStorage.token === "undefined") {
-      navigate("/login");
-      return false;
-    }
-  };
-
   const random = (min, max) =>
     Math.floor(Math.random() * (max - min + 1) + min);
 

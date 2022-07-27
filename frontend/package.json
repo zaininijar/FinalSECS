@@ -1,11 +1,8 @@
 {
-  "name": "@coreui/coreui-free-react-admin-template",
+  "name": "finalsecs",
   "version": "4.4.0",
-  "description": "CoreUI Free React Admin Template",
+  "description": "finalsecs",
   "homepage": ".",
-  "bugs": {
-    "url": "https://github.com/coreui/coreui-free-react-admin-template/issues"
-  },
   "repository": {
     "type": "git",
     "url": "git@github.com:coreui/coreui-free-react-admin-template.git"
@@ -42,6 +39,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.3.0",
+    "recoil": "^0.7.4",
     "redux": "4.2.0",
     "simplebar-react": "^2.4.1"
   },

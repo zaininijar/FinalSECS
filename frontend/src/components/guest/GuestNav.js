@@ -2,8 +2,11 @@ import React from "react";
 import { CContainer, CNavbar, CNavbarBrand } from "@coreui/react";
 import GradientButton from "./GradientButton";
 import { Link } from "react-router-dom";
+import { useAuthenticated } from "src/store/index";
 
 const GuestNav = () => {
+  const [authenticated, setAuthenticated] = useAuthenticated();
+
   return (
     <>
       <CNavbar colorScheme="dark" className="py-4">
@@ -12,9 +15,15 @@ const GuestNav = () => {
           <Link to="/welcome" className="text-light">
             Home
           </Link>
-          <GradientButton href="/login">
-            <div className="small">Sign In</div>
-          </GradientButton>
+          {authenticated.check ? (
+            <GradientButton href="/dashboard">
+              <div className="small">Dashboard</div>
+            </GradientButton>
+          ) : (
+            <GradientButton href="/login">
+              <div className="small">Sign In</div>
+            </GradientButton>
+          )}
         </CContainer>
       </CNavbar>
     </>

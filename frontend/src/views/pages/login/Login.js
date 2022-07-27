@@ -12,6 +12,7 @@ import { Circle, GradientButton, MsgInputError } from "src/components";
 import GuestLayout from "src/layout/GuestLayout";
 import axios from "src/api/axios";
 import { useNavigate } from "react-router-dom";
+import { useAuthenticated } from "src/store/index";
 
 const Login = () => {
   const LOGIN_URL = "/auth/signin";
@@ -19,8 +20,27 @@ const Login = () => {
   const [inputType, setInputType] = useState("password");
   const [username, setUsername] = useState({ msgErr: "", value: "" });
   const [password, setPassword] = useState({ msgErr: "", value: "" });
+  const [authenticated, setAuthenticated] = useAuthenticated();
 
   const [errResp, setErrResp] = useState({});
+
+  const getUser = async (token) => {
+    let user = null;
+    await axios
+      .get("http://localhost:3000/users/me", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        user = response.data.data;
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+
+    setAuthenticated({ check: true, user: user });
+  };
 
   const handleSubmit = async () => {
     await axios
@@ -29,8 +49,9 @@ const Login = () => {
         password: password.value,
       })
       .then((res) => {
-        // console.log(res.data.access_token);
-        localStorage.setItem("token", "Bearer " + res.data.access_token);
+        const token = res.data.jwt.access_token;
+        localStorage.setItem("token", token);
+        getUser(token);
         navigate("/dashboard");
       })
       .catch((err) => {

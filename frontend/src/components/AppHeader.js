@@ -17,10 +17,13 @@ import { cilBell, cilEnvelopeOpen, cilList, cilMenu } from "@coreui/icons";
 import { AppBreadcrumb } from "./index";
 import { AppHeaderDropdown } from "./header/index";
 import { logo } from "src/assets/brand/logo";
+import { useAuthenticated } from "src/store/index";
 
 const AppHeader = () => {
   const dispatch = useDispatch();
   const sidebarShow = useSelector((state) => state.sidebarShow);
+
+  const [authenticated, setAuthenticated] = useAuthenticated();
 
   return (
     <CHeader position="sticky" className="mb-4">
@@ -41,7 +44,9 @@ const AppHeader = () => {
             </CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#">Settings</CNavLink>
+            <CNavLink href="#">
+              {JSON.stringify(authenticated, 2, null)}
+            </CNavLink>
           </CNavItem>
         </CHeaderNav>
         <CHeaderNav>

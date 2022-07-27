@@ -18,7 +18,7 @@ content-type: application/json
 
 ###user profile
 GET http://localhost:3000/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg2NDMzMjEsImV4cCI6MTY1ODY0NTEyMX0.RK6SHDnVKpT1TRhBZm0Qukia_KyYeq_LrYpqVCSI9rE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg4NDAxMjMsImV4cCI6MTY1ODg0MTkyM30.JGUpPbY9TETrnGQSR-uJY5EkxkfoAHeEhcGReevXzSI
 
 ###create dosen 
 POST http://localhost:3000/dosen
