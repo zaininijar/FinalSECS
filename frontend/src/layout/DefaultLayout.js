@@ -10,13 +10,13 @@ import {
 
 const DefaultLayout = () => {
   const [authenticated, setAuthenticated] = useAuthenticated();
-  const token = localStorage.getItem("token");
+  const access_token = localStorage.getItem("access_token");
 
-  const getUser = async (token) => {
+  const getUser = async (access_token) => {
     let usr = null;
     await axios
       .get("/users/me", {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${access_token}` },
       })
       .then((response) => {
         usr = response.data.data;
@@ -28,7 +28,7 @@ const DefaultLayout = () => {
   };
 
   useEffect(() => {
-    getUser(token).then((usr) => {
+    getUser(access_token).then((usr) => {
       setAuthenticated({ user: usr });
     });
   }, []);

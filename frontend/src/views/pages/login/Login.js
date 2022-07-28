@@ -24,12 +24,12 @@ const Login = () => {
 
   const [errResp, setErrResp] = useState({});
 
-  const getUser = async (token) => {
+  const getUser = async (access_token) => {
     let user = null;
     await axios
       .get("http://localhost:3000/users/me", {
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer " + access_token,
         },
       })
       .then((response) => {
@@ -49,9 +49,11 @@ const Login = () => {
         password: password.value,
       })
       .then((res) => {
-        const token = res.data.access_token;
-        localStorage.setItem("token", token);
-        getUser(token).then(() => {
+        const access_token = res.data.access_token;
+        const refresh_token = res.data.refresh_token;
+        localStorage.setItem("access_token", access_token);
+        localStorage.setItem("refresh_token", refresh_token);
+        getUser(access_token).then(() => {
           navigate("/dashboard");
         });
       })

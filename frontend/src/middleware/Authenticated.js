@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 export const Authenticated = (props) => {
   const [authenticated, setAuthenticated] = useAuthenticated();
-  const token = localStorage.getItem("token");
+  const access_token = localStorage.getItem("access_token");
   const navigate = useNavigate();
   useEffect(() => {
-    if (token === null) {
+    if (access_token === null) {
       navigate("/login");
     }
   }, []);

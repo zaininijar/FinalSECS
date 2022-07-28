@@ -77,12 +77,21 @@ const Toasts = React.lazy(() => import("./views/notifications/toasts/Toasts"));
 const Widgets = React.lazy(() => import("./views/widgets/Widgets"));
 
 // Mahasiswa
-const Mahasiswa = React.lazy(() => import("./views/mahasiswa/Show"));
+const Mahasiswa = React.lazy(() => import("./views/mahasiswa/Mahasiswa"));
 const MhsRegister = React.lazy(() => import("./views/mahasiswa/Register"));
 
 // Mahasiswa
-const Dosen = React.lazy(() => import("./views/dosen/Show"));
+const Dosen = React.lazy(() => import("./views/dosen/Dosen"));
 const DsRegister = React.lazy(() => import("./views/dosen/Register"));
+
+//Jurusan
+const Jurusan = React.lazy(() => import("./views/jurusan/Jurusan"));
+
+//Kelas
+const Kelas = React.lazy(() => import("./views/kelas/Kelas"));
+
+//Matakuliah
+const Matakuliah = React.lazy(() => import("./views/matakuliah/Matakuliah"));
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -156,6 +165,15 @@ const routes = [
   { path: "/dosen", name: "Mahasiswa", element: Dosen },
   { path: "/dosen/show", name: "Show", element: Dosen },
   { path: "/dosen/register", name: "Register", element: DsRegister },
+
+  //jurusan
+  { path: "/jurusan", name: "Jurusan", element: Jurusan },
+
+  //kelas
+  { path: "/kelas", name: "Kelas", element: Kelas },
+
+  //matakuliah
+  { path: "/matakuliah", name: "Matakuliah", element: Matakuliah },
 ];
 
 export default routes;

@@ -5,15 +5,20 @@ import HumanMaleBoardIcon from "mdi-react/HumanMaleBoardIcon";
 import {
   cilBell,
   cilCalculator,
+  cilCameraControl,
   cilChartPie,
   cilCursor,
   cilDescription,
   cilDrop,
+  cilLan,
   cilNotes,
   cilPencil,
+  cilPeople,
   cilPuzzle,
   cilSpeedometer,
+  cilSpreadsheet,
   cilStar,
+  cilUsb,
   cilUserFollow,
 } from "@coreui/icons";
 import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
@@ -33,7 +38,7 @@ const _nav = [
     component: CNavGroup,
     name: "Mahasiswa",
     to: "/mahasiswa",
-    icon: <AccountSchoolOutlineIcon className="nav-icon" />,
+    icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -64,6 +69,28 @@ const _nav = [
         to: "/dosen/register",
       },
     ],
+  },
+  {
+    component: CNavTitle,
+    name: "Others",
+  },
+  {
+    component: CNavItem,
+    name: "Jurusan",
+    to: "/jurusan",
+    icon: <CIcon icon={cilCameraControl} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Kelas",
+    to: "/kelas",
+    icon: <CIcon icon={cilLan} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: "Mata Kuliah",
+    to: "/matakuliah",
+    icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
   },
   {
     component: CNavTitle,
