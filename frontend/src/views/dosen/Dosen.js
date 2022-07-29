@@ -139,19 +139,45 @@ const Dosen = () => {
                 btnColor="primary"
                 btnClass=""
                 modalTitle="Edit Dosen"
+                onClick={() => {
+                  getDosenById(row.id);
+                }}
+                onSubmit={() => {
+                  updateDosen(row.id);
+                }}
                 btnTitle={<EditIcon2White width={15} />}
               >
                 <div>
-                  <label htmlFor="name" className="mb-2">
-                    Nama Lengkap
+                  <label htmlFor="nama-dosen" className="mb-2">
+                    Nama Dosen
                   </label>
                   <CInputGroup size="sm" className="mb-3">
                     <CFormInput
-                      id="name"
-                      value={row.name}
+                      onChange={(e) => {
+                        handleName(e.target.value);
+                      }}
+                      value={name.value}
+                      id="nama-dosen"
                       aria-label="Sizing example input"
                       aria-describedby="inputGroup-sizing-sm"
-                      placeholder="name"
+                      placeholder="Nama Dosen"
+                    />
+                  </CInputGroup>
+                </div>
+                <div>
+                  <label htmlFor="username" className="mb-2">
+                    Username(<span className="text-danger">*</span>on dev)
+                  </label>
+                  <CInputGroup size="sm" className="mb-3">
+                    <CFormInput
+                      onChange={(e) => {
+                        handleUsername(e.target.value);
+                      }}
+                      value={username.value}
+                      id="username"
+                      aria-label="Sizing example input"
+                      aria-describedby="inputGroup-sizing-sm"
+                      placeholder="Username"
                     />
                   </CInputGroup>
                 </div>
@@ -161,8 +187,12 @@ const Dosen = () => {
                   </label>
                   <CInputGroup size="sm" className="mb-3">
                     <CFormInput
+                      onChange={(e) => {
+                        handleNip(e.target.value);
+                      }}
+                      value={nip.value}
+                      type="text"
                       id="nip"
-                      value={row.nip}
                       aria-label="Sizing example input"
                       aria-describedby="inputGroup-sizing-sm"
                       placeholder="NIP"
@@ -175,6 +205,13 @@ const Dosen = () => {
                 modalTitle="Change Password"
                 btnClass="mx-2"
                 btnTitle={<KeyIconWhite width={15} />}
+                onClick={() => {
+                  setPassword({ msgErr: "", value: "" });
+                  setConfirmPassword({ msgErr: "", value: "" });
+                }}
+                onSubmit={() => {
+                  updatePasswordMahasiswa(row.id);
+                }}
               >
                 <div>
                   <label htmlFor="new-password" className="mb-2">
@@ -183,6 +220,10 @@ const Dosen = () => {
                   <CInputGroup size="sm" className="mb-3">
                     <CFormInput
                       id="new-password"
+                      value={password.value}
+                      onChange={(e) => {
+                        handlePassword(e.target.value);
+                      }}
                       aria-label="Sizing example input"
                       aria-describedby="inputGroup-sizing-sm"
                       placeholder="New Password"
@@ -196,11 +237,20 @@ const Dosen = () => {
                   <CInputGroup size="sm" className="mb-3">
                     <CFormInput
                       id="confirm-password"
+                      value={confirmPassword.value}
+                      onChange={(e) => {
+                        handleConfirmPassword(e.target.value);
+                      }}
                       aria-label="Sizing example input"
                       aria-describedby="inputGroup-sizing-sm"
                       placeholder="Confirm Password"
                     />
                   </CInputGroup>
+                  {confirmPassword.msgErr && (
+                    <span className="text-danger text-xs">
+                      {confirmPassword.msgErr}
+                    </span>
+                  )}
                 </div>
               </Modal>
               <CButton
@@ -323,11 +373,240 @@ const Dosen = () => {
     return data;
   };
 
+  //Dosen
+  const [username, setUsername] = useState({ msgErr: "", value: "" });
+  const [password, setPassword] = useState({ msgErr: "", value: "" });
+  const [confirmPassword, setConfirmPassword] = useState({
+    msgErr: "",
+    value: "",
+  });
+  const [nip, setNip] = useState({ msgErr: "", value: "" });
+  const [name, setName] = useState({ msgErr: "", value: "" });
+
+  const handleUsername = (value) => {
+    if (value === "") {
+      setUsername((prev) => ({ msgErr: "Username is required" }));
+    } else {
+      setUsername({ msgErr: "", value: value });
+    }
+  };
+
+  const handlePassword = (value) => {
+    if (value === "") {
+      setPassword((prev) => ({ msgErr: "Password is required" }));
+    } else {
+      setPassword({ msgErr: "", value: value });
+    }
+  };
+
+  const handleConfirmPassword = (value) => {
+    if (value === "" || password.value !== value) {
+      let message = "";
+
+      if (value === "") {
+        message = "Password confirmation is required";
+      }
+
+      if (password.value !== value) {
+        message = "Password and confirmation password must be the same.";
+      }
+
+      setConfirmPassword((prev) => ({ msgErr: message }));
+    } else {
+      setConfirmPassword({ msgErr: "", value: value });
+    }
+  };
+
+  const handleNip = (value) => {
+    if (value === "") {
+      setNip((prev) => ({ msgErr: "Nip is required" }));
+    } else {
+      setNip({ msgErr: "", value: value });
+    }
+  };
+
+  const handleName = (value) => {
+    if (value === "") {
+      setName((prev) => ({ msgErr: "Name is required" }));
+    } else {
+      setName({ msgErr: "", value: value });
+    }
+  };
+
+  const addDosen = async () => {
+    await axios
+      .post(
+        DOSEN_URL,
+        {
+          username: username.value,
+          password: password.value,
+          nip: nip.value,
+          name: name.value,
+        },
+        { headers: { Authorization: `Bearer ${access_token}` } }
+      )
+      .then((res) => {
+        getDosen(access_token).then((res) => {
+          setDosen(res);
+        });
+        alertSuccess(res.data.message);
+      })
+      .catch((err) => {
+        alertSuccess(err.message);
+      });
+    return;
+  };
+
+  const getDosenById = async (id) => {
+    let data = {};
+    await axios
+      .get(DOSEN_URL + id, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
+      .then((res) => {
+        data = res.data.data;
+        // setUsername({msgErr: "", value: data.username})
+        setNip({ msgErr: "", value: data.nip });
+        setName({ msgErr: "", value: data.name });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    return data;
+  };
+
+  const updateDosen = async (id) => {
+    await axios
+      .put(
+        DOSEN_URL + id,
+        {
+          username: username.value,
+          nip: nip.value,
+          name: name.value,
+        },
+        { headers: { Authorization: `Bearer ${access_token}` } }
+      )
+      .then((res) => {
+        getDosen(access_token).then((res) => {
+          setDosen(res);
+        });
+        alertSuccess(res.data.message);
+      })
+      .catch((err) => {
+        alertSuccess(err.message);
+      });
+    return;
+  };
+
+  const updatePasswordDosen = async (id) => {
+    await axios
+      .put(
+        DOSEN_URL + id,
+        {
+          password: password.value,
+        },
+        { headers: { Authorization: `Bearer ${access_token}` } }
+      )
+      .then((res) => {
+        getDosen(access_token).then((res) => {
+          setDosen(res);
+        });
+        alertSuccess(res.data.message);
+      })
+      .catch((err) => {
+        alertSuccess(err.message);
+      });
+    return;
+  };
+
   return (
     <div className="App">
       <div className="card">
+        <div className="mt-3 mx-3 d-flex align-items-center justify-content-between">
+          <h4 className="fw-light">Dosen</h4>
+          <Modal
+            btnColor="primary"
+            modalTitle="Tambah Dosen"
+            btnClass="mx-2"
+            btnTitle="Tambah Dosen"
+            onClick={() => {
+              setName({ msgErr: "", value: "" });
+            }}
+            onSubmit={addDosen}
+          >
+            <div>
+              <label htmlFor="nama-dosen" className="mb-2">
+                Nama Dosen
+              </label>
+              <CInputGroup size="sm" className="mb-3">
+                <CFormInput
+                  onChange={(e) => {
+                    handleName(e.target.value);
+                  }}
+                  id="nama-dosen"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  placeholder="Nama Dosen"
+                />
+              </CInputGroup>
+            </div>
+            <div>
+              <label htmlFor="username" className="mb-2">
+                Username
+              </label>
+              <CInputGroup size="sm" className="mb-3">
+                <CFormInput
+                  onChange={(e) => {
+                    handleUsername(e.target.value);
+                  }}
+                  id="username"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  placeholder="Username"
+                />
+              </CInputGroup>
+            </div>
+            <div>
+              <label htmlFor="password" className="mb-2">
+                Password
+              </label>
+              <CInputGroup size="sm" className="mb-3">
+                <CFormInput
+                  onChange={(e) => {
+                    handlePassword(e.target.value);
+                  }}
+                  type="password"
+                  id="password"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  placeholder="Password"
+                />
+              </CInputGroup>
+            </div>
+            <div>
+              <label htmlFor="nip" className="mb-2">
+                NIP
+              </label>
+              <CInputGroup size="sm" className="mb-3">
+                <CFormInput
+                  onChange={(e) => {
+                    handleNip(e.target.value);
+                  }}
+                  type="text"
+                  id="nip"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  placeholder="NIP"
+                />
+              </CInputGroup>
+            </div>
+          </Modal>
+        </div>
         <DataTable
-          title="Dosen"
+          // title="Dosen"
           columns={columns}
           data={dosen && dosen}
           defaultSortFieldID={1}
