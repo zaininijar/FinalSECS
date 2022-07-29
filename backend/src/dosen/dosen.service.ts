@@ -18,7 +18,16 @@ export class DosenService{
 
     async getDosen(userStatus: string){
         this.verifyAdmin(userStatus)
-        const dosen = await this.prisma.dosen.findMany()
+        const dosen = await this.prisma.dosen.findMany({
+            include: {
+                user: {
+                    select : {
+                        password: false,
+                        username: true
+                    },
+                }
+            }
+        })
 
         return {
             status: 'success',
@@ -32,6 +41,14 @@ export class DosenService{
         const dosen = await this.prisma.dosen.findFirst({
             where: {
                 id: dosenId
+            },
+            include: {
+                user: {
+                    select : {
+                        password: false,
+                        username: true
+                    }
+                }
             }
         })
 

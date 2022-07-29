@@ -8,6 +8,9 @@ import { MahasiswaModule } from './mahasiswa/mahasiswa.module';
 import { JurusanModule } from './jurusan/jurusan.module';
 import { KelasModule } from './kelas/kelas.module';
 import { MatkulModule } from './matkul/matkul.module';
+import { TapelModule } from './tapel/tapel.module';
+import { JadwalModule } from './jadwal/jadwal.module';
+import { MatkulMahasiswaModule } from './matkul_mahasiswa/matkul_mahasiswa.module';
 
 @Module({
   imports: [
@@ -16,7 +19,7 @@ import { MatkulModule } from './matkul/matkul.module';
     }),
     AuthModule, 
     UserModule,  
-    PrismaModule, DosenModule, MahasiswaModule, JurusanModule, KelasModule, MatkulModule,
+    PrismaModule, DosenModule, MahasiswaModule, JurusanModule, KelasModule, MatkulModule, TapelModule, JadwalModule, MatkulMahasiswaModule,
   ],
 })
 export class AppModule {}

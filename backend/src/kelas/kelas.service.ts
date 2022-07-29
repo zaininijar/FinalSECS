@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateKelasDto, EditKelasDto } from './dto';
 
@@ -94,16 +94,17 @@ export class KelasService {
             )
         }
 
+        
         const editKelas = await this.prisma.kelas.update({
             where: {
                 id: kelasId
             },
             data: {
-                nama_kelas: dto.nama_kelas,
-                jurusan_id: dto.jurusan_id
+                ...dto
             }
         })
 
+        
         return {
             status: 'success',
             message: 'Data Kelas Berhasil Diedit',

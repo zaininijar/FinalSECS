@@ -64,6 +64,8 @@ model Mahasiswa{
   updatedAt DateTime @updatedAt
 
   user User @relation(fields: [user_id], references: [id])
+  kelas Kelas @relation(fields: [kelas_id], references: [id])
+
   matkulmahasiswa MatakuliahMahasiswa[]
 }
 
@@ -89,6 +91,7 @@ model Kelas {
 
   jurusan Jurusan @relation(fields: [jurusan_id], references: [id])
 
+  mahasiswa Mahasiswa[]
   jadwal Jadwal[]
 }
 
@@ -148,7 +151,7 @@ model MatakuliahMahasiswa{
 
 model TahunPelajaran{
   id Int @id @default(autoincrement())
-  tahun_pelajaran Int
+  tahun_pelajaran String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

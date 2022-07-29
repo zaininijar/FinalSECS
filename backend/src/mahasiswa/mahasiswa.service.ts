@@ -18,7 +18,17 @@ export class MahasiswaService{
 
     async getMahasiswa(userStatus: string){
         this.verifyAdmin(userStatus)
-        const mahasiswa = await this.prisma.mahasiswa.findMany()
+        const mahasiswa = await this.prisma.mahasiswa.findMany({
+            include: {
+                user: {
+                    select : {
+                        password: false,
+                        username: true
+                    }
+                },
+                kelas: true
+            }
+        })
 
         return {
             status: 'success',
@@ -32,6 +42,14 @@ export class MahasiswaService{
         const mahasiswa = await this.prisma.mahasiswa.findFirst({
             where: {
                 id: mahasiswaId
+            },
+            include: {
+                user: {
+                    select : {
+                        password: false,
+                        username: true
+                    }
+                }
             }
         })
 
