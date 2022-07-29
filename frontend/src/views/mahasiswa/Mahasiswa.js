@@ -1,6 +1,7 @@
 import {
   CButton,
   CFormInput,
+  CFormSelect,
   CInputGroup,
   CInputGroupText,
 } from "@coreui/react";
@@ -20,8 +21,10 @@ import dateFormatter from "src/tools/DateFormatter";
 
 const Mahasiswa = () => {
   const MAHASISWA_URL = "/mahasiswa/";
+  const KELAS_URL = "/kelas/";
   const access_token = localStorage.getItem("access_token");
   const [mahasiswa, setMahasiswa] = useState("");
+  const [kelas, setKelas] = useState("");
   const confirmDelete = (e) => {
     immediateToast("question", {
       timeout: 20000,
@@ -91,6 +94,10 @@ const Mahasiswa = () => {
     getMahasiswa(access_token).then((res) => {
       setMahasiswa(res);
     });
+
+    getKelas(access_token).then((res) => {
+      setKelas(res);
+    });
   }, []);
 
   function getNumberOfPages(rowCount, rowsPerPage) {
@@ -143,20 +150,46 @@ const Mahasiswa = () => {
               <Modal
                 btnColor="primary"
                 btnClass=""
-                modalTitle="Change Password"
+                modalTitle="Edit Mahasiswa"
+                onClick={() => {
+                  getMahasiswaById(row.id);
+                }}
+                onSubmit={() => {
+                  updateMahasiswa(row.id);
+                }}
                 btnTitle={<EditIcon2White width={15} />}
               >
                 <div>
-                  <label htmlFor="name" className="mb-2">
-                    Nama Lengkap
+                  <label htmlFor="nama-mahasiswa" className="mb-2">
+                    Nama Mahasiswa
                   </label>
                   <CInputGroup size="sm" className="mb-3">
                     <CFormInput
-                      id="name"
-                      value={row.name}
+                      onChange={(e) => {
+                        handleName(e.target.value);
+                      }}
+                      value={name.value}
+                      id="nama-mahasiswa"
                       aria-label="Sizing example input"
                       aria-describedby="inputGroup-sizing-sm"
-                      placeholder="name"
+                      placeholder="Nama Mahasiswa"
+                    />
+                  </CInputGroup>
+                </div>
+                <div>
+                  <label htmlFor="username" className="mb-2">
+                    Username(<span className="text-danger">*</span>on dev)
+                  </label>
+                  <CInputGroup size="sm" className="mb-3">
+                    <CFormInput
+                      onChange={(e) => {
+                        handleUsername(e.target.value);
+                      }}
+                      value={username.value}
+                      id="username"
+                      aria-label="Sizing example input"
+                      aria-describedby="inputGroup-sizing-sm"
+                      placeholder="Username"
                     />
                   </CInputGroup>
                 </div>
@@ -166,11 +199,15 @@ const Mahasiswa = () => {
                   </label>
                   <CInputGroup size="sm" className="mb-3">
                     <CFormInput
+                      onChange={(e) => {
+                        handleNim(e.target.value);
+                      }}
+                      value={nim.value}
+                      type="text"
                       id="nim"
-                      value={row.nim}
                       aria-label="Sizing example input"
                       aria-describedby="inputGroup-sizing-sm"
-                      placeholder="Nama Lengkap"
+                      placeholder="NIM"
                     />
                   </CInputGroup>
                 </div>
@@ -178,15 +215,25 @@ const Mahasiswa = () => {
                   <label htmlFor="kelas" className="mb-2">
                     Kelas
                   </label>
-                  <CInputGroup size="sm" className="mb-3">
-                    <CFormInput
-                      id="kelas"
-                      value={row.kelas_id}
-                      aria-label="Sizing example input"
-                      aria-describedby="inputGroup-sizing-sm"
-                      placeholder="kelas"
-                    />
-                  </CInputGroup>
+                  <CFormSelect
+                    size="sm"
+                    className="mb-3"
+                    aria-label="Small select example"
+                    value={kelasId.value}
+                    onChange={(e) => {
+                      handleKelasId(e.target.value);
+                    }}
+                  >
+                    <option value={null}>Select Kelas</option>
+                    {kelas &&
+                      kelas.map((item) => {
+                        return (
+                          <option key={item.id} value={item.id}>
+                            {item.nama_kelas}
+                          </option>
+                        );
+                      })}
+                  </CFormSelect>
                 </div>
               </Modal>
               <Modal
@@ -194,6 +241,13 @@ const Mahasiswa = () => {
                 modalTitle="Change Password"
                 btnClass="mx-2"
                 btnTitle={<KeyIconWhite width={15} />}
+                onClick={() => {
+                  setPassword({ msgErr: "", value: "" });
+                  setConfirmPassword({ msgErr: "", value: "" });
+                }}
+                onSubmit={() => {
+                  updatePasswordMahasiswa(row.id);
+                }}
               >
                 <div>
                   <label htmlFor="new-password" className="mb-2">
@@ -202,6 +256,10 @@ const Mahasiswa = () => {
                   <CInputGroup size="sm" className="mb-3">
                     <CFormInput
                       id="new-password"
+                      value={password.value}
+                      onChange={(e) => {
+                        handlePassword(e.target.value);
+                      }}
                       aria-label="Sizing example input"
                       aria-describedby="inputGroup-sizing-sm"
                       placeholder="New Password"
@@ -215,11 +273,20 @@ const Mahasiswa = () => {
                   <CInputGroup size="sm" className="mb-3">
                     <CFormInput
                       id="confirm-password"
+                      value={confirmPassword.value}
+                      onChange={(e) => {
+                        handleConfirmPassword(e.target.value);
+                      }}
                       aria-label="Sizing example input"
                       aria-describedby="inputGroup-sizing-sm"
                       placeholder="Confirm Password"
                     />
                   </CInputGroup>
+                  {confirmPassword.msgErr && (
+                    <span className="text-danger text-xs">
+                      {confirmPassword.msgErr}
+                    </span>
+                  )}
                 </div>
               </Modal>
               <CButton
@@ -324,6 +391,25 @@ const Mahasiswa = () => {
     </div>
   ));
 
+  //?get Kelas
+  const getKelas = async (access_token) => {
+    let data = {};
+    await axios
+      .get(KELAS_URL, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
+      .then((res) => {
+        data = res.data.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    return data;
+  };
+
   const getMahasiswa = async (access_token) => {
     let data = {};
     await axios
@@ -342,11 +428,275 @@ const Mahasiswa = () => {
     return data;
   };
 
+  //Mahasiswa
+  const [username, setUsername] = useState({ msgErr: "", value: "" });
+  const [password, setPassword] = useState({ msgErr: "", value: "" });
+  const [confirmPassword, setConfirmPassword] = useState({
+    msgErr: "",
+    value: "",
+  });
+  const [nim, setNim] = useState({ msgErr: "", value: "" });
+  const [name, setName] = useState({ msgErr: "", value: "" });
+  const [kelasId, setKelasId] = useState({ msgErr: "", value: "" });
+
+  const handleUsername = (value) => {
+    if (value === "") {
+      setUsername((prev) => ({ msgErr: "Type nama kelas" }));
+    } else {
+      setUsername({ msgErr: "", value: value });
+    }
+  };
+
+  const handlePassword = (value) => {
+    if (value === "") {
+      setPassword((prev) => ({ msgErr: "Type nama kelas" }));
+    } else {
+      setPassword({ msgErr: "", value: value });
+    }
+  };
+
+  const handleConfirmPassword = (value) => {
+    if (value === "" || password.value !== value) {
+      let message = "";
+
+      if (value === "") {
+        message = "Type new password";
+      }
+
+      if (password.value !== value) {
+        message = "Password and confirmation password must be the same.";
+      }
+
+      setConfirmPassword((prev) => ({ msgErr: message }));
+    } else {
+      setConfirmPassword({ msgErr: "", value: value });
+    }
+  };
+
+  const handleNim = (value) => {
+    if (value === "") {
+      setNim((prev) => ({ msgErr: "Type nama kelas" }));
+    } else {
+      setNim({ msgErr: "", value: value });
+    }
+  };
+
+  const handleName = (value) => {
+    if (value === "") {
+      setName((prev) => ({ msgErr: "Type nama kelas" }));
+    } else {
+      setName({ msgErr: "", value: value });
+    }
+  };
+
+  const handleKelasId = (value) => {
+    if (value === "") {
+      setKelasId((prev) => ({ msgErr: "Type nama kelas" }));
+    } else {
+      setKelasId({ msgErr: "", value: value });
+    }
+  };
+
+  const addMahasiswa = async () => {
+    await axios
+      .post(
+        MAHASISWA_URL,
+        {
+          username: username.value,
+          password: password.value,
+          nim: nim.value,
+          name: name.value,
+          kelas_id: parseInt(kelasId.value),
+        },
+        { headers: { Authorization: `Bearer ${access_token}` } }
+      )
+      .then((res) => {
+        getMahasiswa(access_token).then((res) => {
+          setMahasiswa(res);
+        });
+        alertSuccess(res.data.message);
+      })
+      .catch((err) => {
+        alertSuccess(err.message);
+      });
+    return;
+  };
+
+  const getMahasiswaById = async (id) => {
+    let data = {};
+    await axios
+      .get(MAHASISWA_URL + id, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      })
+      .then((res) => {
+        data = res.data.data;
+        // setUsername({msgErr: "", value: data.username})
+        setNim({ msgErr: "", value: data.nim });
+        setName({ msgErr: "", value: data.name });
+        setKelasId({ msgErr: "", value: data.kelas_id });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    return data;
+  };
+
+  const updateMahasiswa = async (id) => {
+    await axios
+      .put(
+        MAHASISWA_URL + id,
+        {
+          username: username.value,
+          nim: nim.value,
+          name: name.value,
+          kelas_id: parseInt(kelasId.value),
+        },
+        { headers: { Authorization: `Bearer ${access_token}` } }
+      )
+      .then((res) => {
+        getMahasiswa(access_token).then((res) => {
+          setMahasiswa(res);
+        });
+        alertSuccess(res.data.message);
+      })
+      .catch((err) => {
+        alertSuccess(err.message);
+      });
+    return;
+  };
+
+  const updatePasswordMahasiswa = async (id) => {
+    await axios
+      .put(
+        MAHASISWA_URL + id,
+        {
+          password: password.value,
+        },
+        { headers: { Authorization: `Bearer ${access_token}` } }
+      )
+      .then((res) => {
+        getMahasiswa(access_token).then((res) => {
+          setMahasiswa(res);
+        });
+        alertSuccess(res.data.message);
+      })
+      .catch((err) => {
+        alertSuccess(err.message);
+      });
+    return;
+  };
+
   return (
     <div className="App">
       <div className="card">
+        <div className="mt-3 mx-3 d-flex align-items-center justify-content-between">
+          <h4 className="fw-light">Mahasiswa</h4>
+          <Modal
+            btnColor="primary"
+            modalTitle="Tambah Mahasiswa"
+            btnClass="mx-2"
+            btnTitle="Tambah Mahasiswa"
+            onClick={() => {
+              setName({ msgErr: "", value: "" });
+            }}
+            onSubmit={addMahasiswa}
+          >
+            <div>
+              <label htmlFor="nama-mahasiswa" className="mb-2">
+                Nama Mahasiswa
+              </label>
+              <CInputGroup size="sm" className="mb-3">
+                <CFormInput
+                  onChange={(e) => {
+                    handleName(e.target.value);
+                  }}
+                  id="nama-mahasiswa"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  placeholder="Nama Mahasiswa"
+                />
+              </CInputGroup>
+            </div>
+            <div>
+              <label htmlFor="username" className="mb-2">
+                Username
+              </label>
+              <CInputGroup size="sm" className="mb-3">
+                <CFormInput
+                  onChange={(e) => {
+                    handleUsername(e.target.value);
+                  }}
+                  id="username"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  placeholder="Username"
+                />
+              </CInputGroup>
+            </div>
+            <div>
+              <label htmlFor="password" className="mb-2">
+                Password
+              </label>
+              <CInputGroup size="sm" className="mb-3">
+                <CFormInput
+                  onChange={(e) => {
+                    handlePassword(e.target.value);
+                  }}
+                  type="password"
+                  id="password"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  placeholder="Password"
+                />
+              </CInputGroup>
+            </div>
+            <div>
+              <label htmlFor="nim" className="mb-2">
+                NIM
+              </label>
+              <CInputGroup size="sm" className="mb-3">
+                <CFormInput
+                  onChange={(e) => {
+                    handleNim(e.target.value);
+                  }}
+                  type="text"
+                  id="nim"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-sm"
+                  placeholder="NIM"
+                />
+              </CInputGroup>
+            </div>
+            <div>
+              <label htmlFor="kelas" className="mb-2">
+                Kelas
+              </label>
+              <CFormSelect
+                size="sm"
+                className="mb-3"
+                aria-label="Small select example"
+                onChange={(e) => {
+                  handleKelasId(e.target.value);
+                }}
+              >
+                <option value={null}>Select Kelas</option>
+                {kelas &&
+                  kelas.map((item) => {
+                    return (
+                      <option key={item.id} value={item.id}>
+                        {item.nama_kelas}
+                      </option>
+                    );
+                  })}
+              </CFormSelect>
+            </div>
+          </Modal>
+        </div>
         <DataTable
-          title="Mahasiswa"
+          // title="Mahasiswa"
           columns={columns}
           data={mahasiswa && mahasiswa}
           defaultSortFieldID={1}
