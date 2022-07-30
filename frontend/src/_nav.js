@@ -45,11 +45,6 @@ const _nav = [
         name: "Show",
         to: "/mahasiswa/show",
       },
-      {
-        component: CNavItem,
-        name: "Register",
-        to: "/mahasiswa/register",
-      },
     ],
   },
   {
@@ -62,11 +57,6 @@ const _nav = [
         component: CNavItem,
         name: "Show",
         to: "/dosen/show",
-      },
-      {
-        component: CNavItem,
-        name: "Register",
-        to: "/dosen/register",
       },
     ],
   },

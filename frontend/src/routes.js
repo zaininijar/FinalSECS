@@ -93,6 +93,9 @@ const Kelas = React.lazy(() => import("./views/kelas/Kelas"));
 //Matakuliah
 const Matakuliah = React.lazy(() => import("./views/matakuliah/Matakuliah"));
 
+//Profile
+const Profile = React.lazy(() => import("./views/profile/Profile"));
+
 const routes = [
   { path: "/", exact: true, name: "Home" },
   { path: "/dashboard", name: "Dashboard", element: Dashboard },
@@ -174,6 +177,9 @@ const routes = [
 
   //matakuliah
   { path: "/matakuliah", name: "Matakuliah", element: Matakuliah },
+
+  //profile
+  { path: "/profile", name: "Profile", element: Profile },
 ];
 
 export default routes;

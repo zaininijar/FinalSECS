@@ -12,50 +12,51 @@ POST http://localhost:3000/auth/signin
 content-type: application/json
 
 {
-    "username": "NVXz4Aro7A",
+    "username": "admin",
     "password": "secret123"
 }
 
 ###user profile
 GET http://localhost:3000/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE3LCJ1c2VybmFtZSI6Ik5WWHo0QXJvN0EiLCJpYXQiOjE2NTkwMTY5NjUsImV4cCI6MTY1OTEwMzM2NX0.tUtMaSgLEeYjZ2sFLJ33TSD42xeDNB-JphE1A9HNKFU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkwNjY5ODUsImV4cCI6MTY1OTE1MzM4NX0.tQwWjd0wq1Z7Ob_Rbpn4lRfWlGZTr9adqW5rK8ECkn8
+
 
 ###create dosen 
 POST http://localhost:3000/dosen
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg5NzQ1NjIsImV4cCI6MTY1OTA2MDk2Mn0.SDprG2ohfRbWNg8PyrKIn7rgrMsX4AAGEmBkePo0tAc
-
-# {
-#     "username": "NVXz4Aro7A",
-#     "password": "secret123",
-#     "nip": "4334357844066304",
-#     "name": "Donald Wade"
-# }
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkwNjY5ODUsImV4cCI6MTY1OTE1MzM4NX0.tQwWjd0wq1Z7Ob_Rbpn4lRfWlGZTr9adqW5rK8ECkn8
 
 {
-    "username": "JiJB20qAzG",
+    "username": "NVXz4Aro7A",
     "password": "secret123",
-    "nip": "8426779188396032",
-    "name": "Eula Ellis"
+    "nip": "4334357844066304",
+    "name": "Donald Wade"
 }
+
+# {
+#     "username": "JiJB20qAzG",
+#     "password": "secret123",
+#     "nip": "8426779188396032",
+#     "name": "Eula Ellis"
+# }
 
 ###get dosen
 GET http://localhost:3000/dosen
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg5NzQ1NjIsImV4cCI6MTY1OTA2MDk2Mn0.SDprG2ohfRbWNg8PyrKIn7rgrMsX4AAGEmBkePo0tAc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkwNjY5ODUsImV4cCI6MTY1OTE1MzM4NX0.tQwWjd0wq1Z7Ob_Rbpn4lRfWlGZTr9adqW5rK8ECkn8
 
 
 ###create mahasiswa 
 POST http://localhost:3000/mahasiswa
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg5NzQ1NjIsImV4cCI6MTY1OTA2MDk2Mn0.SDprG2ohfRbWNg8PyrKIn7rgrMsX4AAGEmBkePo0tAc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkxNTE0MDQsImV4cCI6MTY1OTIzNzgwNH0.yE7IpVFv00SI8BQt7d7gRJOuDyfFl2b3VuGTLdlKoow
 content-type: application/json
 
-# {
-#     "username": "TEST",
-#     "password": "TEST",
-#     "nim": "3242",
-#     "name": "Hallie Bla3ck",
-#     "kelas_id": 1
-# }
+{
+    "username": "TEST",
+    "password": "TEST",
+    "nim": "3242",
+    "name": "Hallie Bla3ck",
+    "kelas_id": 1
+}
 
 # {
 #     "username": "rbkxlznqdu",
@@ -83,7 +84,7 @@ content-type: application/json
 
 ###get mahasiswa
 GET http://localhost:3000/mahasiswa
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg5NzQ1NjIsImV4cCI6MTY1OTA2MDk2Mn0.SDprG2ohfRbWNg8PyrKIn7rgrMsX4AAGEmBkePo0tAc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkwNjY5ODUsImV4cCI6MTY1OTE1MzM4NX0.tQwWjd0wq1Z7Ob_Rbpn4lRfWlGZTr9adqW5rK8ECkn8
 
 ###delete mahasiswa
 DELETE http://localhost:3000/mahasiswa/1
@@ -91,7 +92,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuY
 
 ###Jurusan
 POST http://localhost:3000/jurusan
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg5NzQ1NjIsImV4cCI6MTY1OTA2MDk2Mn0.SDprG2ohfRbWNg8PyrKIn7rgrMsX4AAGEmBkePo0tAc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkxNTE0MDQsImV4cCI6MTY1OTIzNzgwNH0.yE7IpVFv00SI8BQt7d7gRJOuDyfFl2b3VuGTLdlKoow
 content-type: application/json
 
 # {
@@ -106,14 +107,19 @@ content-type: application/json
 #     "nama_jurusan" : "Teknik Elektro(TE)"
 # }
 
-# {
-#     "nama_jurusan" : "Desain Komunikasi Visual(DKV)"
-# }
+{
+    "nama_jurusan" : "Desain Komunikasi Visual(DKV)"
+}
 
 
 ###Jurusan
+GET http://localhost:3000/jurusan
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkwNjY5ODUsImV4cCI6MTY1OTE1MzM4NX0.tQwWjd0wq1Z7Ob_Rbpn4lRfWlGZTr9adqW5rK8ECkn8
+content-type: application/json
+
+###Kelas
 GET http://localhost:3000/kelas
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg5NzQ1NjIsImV4cCI6MTY1OTA2MDk2Mn0.SDprG2ohfRbWNg8PyrKIn7rgrMsX4AAGEmBkePo0tAc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkwNjY5ODUsImV4cCI6MTY1OTE1MzM4NX0.tQwWjd0wq1Z7Ob_Rbpn4lRfWlGZTr9adqW5rK8ECkn8
 content-type: application/json
 
 ###mahasiswa update password

@@ -127,12 +127,12 @@ const Mahasiswa = () => {
     },
     {
       name: "Kelas",
-      selector: (row) => row.kelas_id,
+      selector: (row) => row.kelas.nama_kelas,
       sortable: true,
     },
     {
-      name: "User Id",
-      selector: (row) => row.user_id,
+      name: "Username",
+      selector: (row) => row.user.username,
       sortable: true,
     },
     {
@@ -178,7 +178,7 @@ const Mahasiswa = () => {
                 </div>
                 <div>
                   <label htmlFor="username" className="mb-2">
-                    Username(<span className="text-danger">*</span>on dev)
+                    Username
                   </label>
                   <CInputGroup size="sm" className="mb-3">
                     <CFormInput
@@ -532,7 +532,7 @@ const Mahasiswa = () => {
       })
       .then((res) => {
         data = res.data.data;
-        // setUsername({msgErr: "", value: data.username})
+        setUsername({ msgErr: "", value: data.user.username });
         setNim({ msgErr: "", value: data.nim });
         setName({ msgErr: "", value: data.name });
         setKelasId({ msgErr: "", value: data.kelas_id });

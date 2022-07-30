@@ -24,7 +24,7 @@ import CIcon from "@coreui/icons-react";
 
 import avatar8 from "./../../assets/images/avatars/8.jpg";
 import { useAuthenticated } from "src/store/index";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AppHeaderDropdown = () => {
   const [authenticated, setAuthenticated] = useAuthenticated();
@@ -44,9 +44,11 @@ const AppHeaderDropdown = () => {
         <CDropdownHeader className="bg-light fw-semibold py-2">
           Settings
         </CDropdownHeader>
-        <CDropdownItem href="#">
-          <CIcon icon={cilUser} className="me-2" />
-          Profile
+        <CDropdownItem>
+          <Link className="dec-none text-dark" to="/profile">
+            <CIcon icon={cilUser} className="me-2" />
+            Profile
+          </Link>
         </CDropdownItem>
         <CDropdownItem href="#">
           <CIcon icon={cilSettings} className="me-2" />

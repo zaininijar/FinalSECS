@@ -119,8 +119,8 @@ const Dosen = () => {
       sortable: true,
     },
     {
-      name: "User Id",
-      selector: (row) => row.user_id,
+      name: "Username",
+      selector: (row) => row.user.username,
       sortable: true,
     },
     {
@@ -166,7 +166,7 @@ const Dosen = () => {
                 </div>
                 <div>
                   <label htmlFor="username" className="mb-2">
-                    Username(<span className="text-danger">*</span>on dev)
+                    Username
                   </label>
                   <CInputGroup size="sm" className="mb-3">
                     <CFormInput
@@ -210,7 +210,7 @@ const Dosen = () => {
                   setConfirmPassword({ msgErr: "", value: "" });
                 }}
                 onSubmit={() => {
-                  updatePasswordMahasiswa(row.id);
+                  updatePasswordDosen(row.id);
                 }}
               >
                 <div>
@@ -467,7 +467,7 @@ const Dosen = () => {
       })
       .then((res) => {
         data = res.data.data;
-        // setUsername({msgErr: "", value: data.username})
+        setUsername({ msgErr: "", value: data.user.username });
         setNip({ msgErr: "", value: data.nip });
         setName({ msgErr: "", value: data.name });
       })
