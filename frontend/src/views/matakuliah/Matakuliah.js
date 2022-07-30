@@ -96,6 +96,13 @@ const Matakuliah = () => {
     });
   };
 
+  const alertDanger = (message) => {
+    immediateToast("info", {
+      message: message,
+      color: "red",
+    });
+  };
+
   useEffect(() => {
     getMatakuliah(access_token).then((res) => {
       setMatakuliah(res);
@@ -165,8 +172,10 @@ const Matakuliah = () => {
                 onClick={() => {
                   getMatakuliahById(row.id);
                 }}
-                onSubmit={() => {
-                  updateMatakuliah(row.id);
+                onSubmit={async () => {
+                  await updateMatakuliah(row.id).then((res) => {
+                    return res;
+                  });
                 }}
                 btnTitle={<EditIcon2White width={15} />}
               >
@@ -468,6 +477,7 @@ const Matakuliah = () => {
   };
 
   const addMatakuliah = async () => {
+    let isSuccess = true;
     await axios
       .post(
         MATAKULIAH_URL,
@@ -487,9 +497,12 @@ const Matakuliah = () => {
         alertSuccess(res.data.message);
       })
       .catch((err) => {
-        alertSuccess(err.message);
+        err.response.data.message.map((err) => {
+          alertDanger(err);
+        });
+        isSuccess = false;
       });
-    return;
+    return isSuccess;
   };
 
   const updateMatakuliah = async (id) => {
@@ -528,7 +541,7 @@ const Matakuliah = () => {
       .then((res) => {
         data = res.data.data;
         setNamaMatakuliah({ msgErr: "", value: data.nama_matakuliah });
-        setKodeMatakuliah({ msgErr: "", value: data.nama_matakuliah });
+        setKodeMatakuliah({ msgErr: "", value: data.kode_matakuliah });
         setSemester({ msgErr: "", value: data.semester });
         setSks({ msgErr: "", value: data.sks });
         setJurusanId({ msgErr: "", value: data.jurusan.id });
