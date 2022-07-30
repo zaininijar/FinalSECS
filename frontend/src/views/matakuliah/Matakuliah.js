@@ -497,7 +497,10 @@ const Matakuliah = () => {
       .put(
         MATAKULIAH_URL + id,
         {
+          kode_matakuliah: kodeMatakuliah.value,
           nama_matakuliah: namaMatakuliah.value,
+          semester: semester.value,
+          sks: sks.value,
           jurusan_id: parseInt(jurusanId.value),
         },
         { headers: { Authorization: `Bearer ${access_token}` } }
@@ -525,6 +528,9 @@ const Matakuliah = () => {
       .then((res) => {
         data = res.data.data;
         setNamaMatakuliah({ msgErr: "", value: data.nama_matakuliah });
+        setKodeMatakuliah({ msgErr: "", value: data.nama_matakuliah });
+        setSemester({ msgErr: "", value: data.semester });
+        setSks({ msgErr: "", value: data.sks });
         setJurusanId({ msgErr: "", value: data.jurusan.id });
       })
       .catch((err) => {
