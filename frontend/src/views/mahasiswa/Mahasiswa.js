@@ -82,6 +82,13 @@ const Mahasiswa = () => {
     });
   };
 
+  const alertDanger = (message) => {
+    immediateToast("info", {
+      message: message,
+      color: "red",
+    });
+  };
+
   useEffect(() => {
     getMahasiswa(access_token).then((res) => {
       setMahasiswa(res);
@@ -146,8 +153,10 @@ const Mahasiswa = () => {
                 onClick={() => {
                   getMahasiswaById(row.id);
                 }}
-                onSubmit={() => {
-                  updateMahasiswa(row.id);
+                onSubmit={async () => {
+                  await updateMahasiswa(row.id).then((res) => {
+                    return;
+                  });
                 }}
                 btnTitle={<EditIcon2White width={15} />}
               >
@@ -490,6 +499,7 @@ const Mahasiswa = () => {
   };
 
   const addMahasiswa = async () => {
+    let isSuccess = true;
     await axios
       .post(
         MAHASISWA_URL,
@@ -509,9 +519,12 @@ const Mahasiswa = () => {
         alertSuccess(res.data.message);
       })
       .catch((err) => {
-        alertSuccess(err.message);
+        err.response.data.message.map((err) => {
+          alertDanger(err);
+        });
+        isSuccess = false;
       });
-    return;
+    return isSuccess;
   };
 
   const getMahasiswaById = async (id) => {

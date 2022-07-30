@@ -80,6 +80,13 @@ const Dosen = () => {
     });
   };
 
+  const alertDanger = (message) => {
+    immediateToast("info", {
+      message: message,
+      color: "red",
+    });
+  };
+
   useEffect(() => {
     getDosen(access_token).then((res) => {
       setDosen(res);
@@ -135,8 +142,10 @@ const Dosen = () => {
                 onClick={() => {
                   getDosenById(row.id);
                 }}
-                onSubmit={() => {
-                  updateDosen(row.id);
+                onSubmit={async () => {
+                  await updateDosen(row.id).then((res) => {
+                    return res;
+                  });
                 }}
                 btnTitle={<EditIcon2White width={15} />}
               >
@@ -427,6 +436,7 @@ const Dosen = () => {
   };
 
   const addDosen = async () => {
+    let isSuccess = true;
     await axios
       .post(
         DOSEN_URL,
@@ -445,9 +455,12 @@ const Dosen = () => {
         alertSuccess(res.data.message);
       })
       .catch((err) => {
-        alertSuccess(err.message);
+        err.response.data.message.map((err) => {
+          alertDanger(err);
+        });
+        isSuccess = false;
       });
-    return;
+    return isSuccess;
   };
 
   const getDosenById = async (id) => {

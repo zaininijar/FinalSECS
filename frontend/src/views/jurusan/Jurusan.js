@@ -85,6 +85,13 @@ const Jurusan = () => {
     });
   };
 
+  const alertDanger = (message) => {
+    immediateToast("info", {
+      message: message,
+      color: "red",
+    });
+  };
+
   useEffect(() => {
     getJurusan(access_token).then((res) => {
       setJurusan(res);
@@ -130,8 +137,10 @@ const Jurusan = () => {
                 onClick={() => {
                   getJurusanById(row.id);
                 }}
-                onSubmit={() => {
-                  updateJurusan(row.id);
+                onSubmit={async () => {
+                  await updateJurusan(row.id).then((res) => {
+                    return res;
+                  });
                 }}
                 btnTitle={<EditIcon2White width={15} />}
               >
@@ -284,6 +293,7 @@ const Jurusan = () => {
   };
 
   const addJurusan = async () => {
+    let isSuccess = true;
     await axios
       .post(
         JURUSAN_URL,
@@ -299,9 +309,12 @@ const Jurusan = () => {
         alertSuccess(res.data.message);
       })
       .catch((err) => {
-        alertSuccess(err.message);
+        err.response.data.message.map((err) => {
+          alertDanger(err);
+        });
+        isSuccess = false;
       });
-    return;
+    return isSuccess;
   };
 
   const updateJurusan = async (id) => {

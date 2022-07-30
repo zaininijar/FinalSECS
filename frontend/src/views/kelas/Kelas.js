@@ -96,6 +96,13 @@ const Kelas = () => {
     });
   };
 
+  const alertDanger = (message) => {
+    immediateToast("info", {
+      message: message,
+      color: "red",
+    });
+  };
+
   useEffect(() => {
     getKelas(access_token).then((res) => {
       setKelas(res);
@@ -150,8 +157,10 @@ const Kelas = () => {
                 onClick={() => {
                   getKelasById(row.id);
                 }}
-                onSubmit={() => {
-                  updateKelas(row.id);
+                onSubmit={async () => {
+                  await updateKelas(row.id).then((res) => {
+                    return res;
+                  });
                 }}
                 btnTitle={<EditIcon2White width={15} />}
               >
@@ -355,6 +364,7 @@ const Kelas = () => {
   };
 
   const addKelas = async () => {
+    let isSuccess = true;
     await axios
       .post(
         KELAS_URL,
@@ -371,9 +381,12 @@ const Kelas = () => {
         alertSuccess(res.data.message);
       })
       .catch((err) => {
-        alertSuccess(err.message);
+        err.response.data.message.map((err) => {
+          alertDanger(err);
+        });
+        isSuccess = false;
       });
-    return;
+    return isSuccess;
   };
 
   const updateKelas = async (id) => {
