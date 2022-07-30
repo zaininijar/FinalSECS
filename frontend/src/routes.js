@@ -78,7 +78,6 @@ const Widgets = React.lazy(() => import("./views/widgets/Widgets"));
 
 // Mahasiswa
 const Mahasiswa = React.lazy(() => import("./views/mahasiswa/Mahasiswa"));
-const MhsRegister = React.lazy(() => import("./views/mahasiswa/Register"));
 
 // Mahasiswa
 const Dosen = React.lazy(() => import("./views/dosen/Dosen"));
@@ -92,9 +91,18 @@ const Kelas = React.lazy(() => import("./views/kelas/Kelas"));
 
 //Matakuliah
 const Matakuliah = React.lazy(() => import("./views/matakuliah/Matakuliah"));
+//Matakuliah
+const MatakuliahMahasiswa = React.lazy(() =>
+  import("./views/matakuliah/MatakuliahMahasiswa")
+);
 
 //Profile
 const Profile = React.lazy(() => import("./views/profile/Profile"));
+
+//Profile
+const TahunPelajaran = React.lazy(() =>
+  import("./views/tahun-pelajaran/TahunPelajaran")
+);
 
 const routes = [
   { path: "/", exact: true, name: "Home" },
@@ -162,7 +170,6 @@ const routes = [
   //mahasiswa
   { path: "/mahasiswa", name: "Mahasiswa", element: Mahasiswa },
   { path: "/mahasiswa/show", name: "Show", element: Mahasiswa },
-  { path: "/mahasiswa/register", name: "Register", element: MhsRegister },
 
   //dosen
   { path: "/dosen", name: "Mahasiswa", element: Dosen },
@@ -177,9 +184,18 @@ const routes = [
 
   //matakuliah
   { path: "/matakuliah", name: "Matakuliah", element: Matakuliah },
+  //matakuliah
+  {
+    path: "/matakuliah/set-matakuliah",
+    name: "Set Matakuliah",
+    element: MatakuliahMahasiswa,
+  },
 
   //profile
   { path: "/profile", name: "Profile", element: Profile },
+
+  //tahun-pelajaran
+  { path: "/tahun-pelajaran", name: "TahunPelajaran", element: TahunPelajaran },
 ];
 
 export default routes;

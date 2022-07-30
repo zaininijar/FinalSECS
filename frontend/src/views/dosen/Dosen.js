@@ -1,18 +1,11 @@
-import {
-  CButton,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-} from "@coreui/react";
+import { CButton, CFormInput, CInputGroup } from "@coreui/react";
 import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import { useToast, immediateToast } from "izitoast-react";
+import { immediateToast } from "izitoast-react";
 import axios from "src/api/axios";
 import {
   DeleteIconWhite,
   EditIcon2White,
-  EditIconWhite,
-  KeyIcon,
   KeyIconWhite,
 } from "src/assets/icons";
 import Modal from "src/components/Modal";

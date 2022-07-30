@@ -144,3 +144,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuY
 GET http://localhost:3000/kelas
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg5NzQ1NjIsImV4cCI6MTY1OTA2MDk2Mn0.SDprG2ohfRbWNg8PyrKIn7rgrMsX4AAGEmBkePo0tAc
 
+
+###Kelas GET
+GET http://localhost:3000/matakuliah-mahasiswa
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkxOTQ5OTQsImV4cCI6MTY1OTI4MTM5NH0.38Fg_c9WEbhBR9vsze_Yp35B5bRuawBrb1e9hWz7NIE
+

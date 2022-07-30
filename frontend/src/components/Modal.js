@@ -49,8 +49,13 @@ const Modal = ({
           <CButton
             color="primary"
             onClick={() => {
-              onSubmit();
-              setVisible(false);
+              onSubmit().then((res) => {
+                if (res || res === undefined) {
+                  setVisible(false);
+                } else {
+                  setVisible(true);
+                }
+              });
             }}
             size="sm"
           >
