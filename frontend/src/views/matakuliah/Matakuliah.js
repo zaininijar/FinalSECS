@@ -24,6 +24,7 @@ import {
 } from "src/assets/icons";
 import Modal from "src/components/Modal";
 import DateFormatter from "src/tools/DateFormatter";
+import { useNavigate } from "react-router-dom";
 
 const Matakuliah = () => {
   const MATAKULIAH_URL = "/matakuliah/";
@@ -31,6 +32,8 @@ const Matakuliah = () => {
   const access_token = localStorage.getItem("access_token");
   const [matakuliah, setMatakuliah] = useState("");
   const [jurusan, setJurusan] = useState("");
+  const navigate = useNavigate();
+
   const confirmDelete = (e) => {
     immediateToast("question", {
       timeout: 20000,
@@ -386,6 +389,9 @@ const Matakuliah = () => {
         data = res.data.data;
       })
       .catch((err) => {
+        if (err.response.status === 403) {
+          navigate("/dashboard");
+        }
         console.log(err);
       });
 

@@ -25,12 +25,14 @@ import {
 } from "src/assets/icons";
 import Modal from "src/components/Modal";
 import dateFormatter from "src/tools/DateFormatter";
+import { useNavigate } from "react-router-dom";
 
 const MatakuliahMahasiswa = () => {
   const MATAKULIAH_URL = "/matakuliah/";
   const MAHASISWA_URL = "/mahasiswa/";
   const MATAKULIAH_MAHASISWA_URL = "/matakuliah-mahasiswa/";
 
+  const navigate = useNavigate();
   const access_token = localStorage.getItem("access_token");
 
   const [matakuliahMahasiswa, setMatakuliahMahasiswa] = useState("");
@@ -337,6 +339,9 @@ const MatakuliahMahasiswa = () => {
         data = res.data.data;
       })
       .catch((err) => {
+        if (err.response.status === 403) {
+          navigate("/dashboard");
+        }
         console.log(err);
       });
 

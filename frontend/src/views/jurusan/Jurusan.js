@@ -15,11 +15,14 @@ import {
 } from "src/assets/icons";
 import Modal from "src/components/Modal";
 import dateFormatter from "src/tools/DateFormatter";
+import { useNavigate } from "react-router-dom";
 
 const Jurusan = () => {
   const JURUSAN_URL = "/jurusan/";
   const access_token = localStorage.getItem("access_token");
   const [jurusan, setJurusan] = useState("");
+  const navigate = useNavigate();
+
   const confirmDelete = (e) => {
     immediateToast("question", {
       timeout: 20000,
@@ -276,6 +279,9 @@ const Jurusan = () => {
         data = res.data.data;
       })
       .catch((err) => {
+        if (err.response.status === 403) {
+          navigate("/dashboard");
+        }
         console.log(err);
       });
 

@@ -24,6 +24,7 @@ import {
 } from "src/assets/icons";
 import Modal from "src/components/Modal";
 import dateFormatter from "src/tools/DateFormatter";
+import { useNavigate } from "react-router-dom";
 
 const Kelas = () => {
   const KELAS_URL = "/kelas/";
@@ -31,6 +32,8 @@ const Kelas = () => {
   const access_token = localStorage.getItem("access_token");
   const [kelas, setKelas] = useState("");
   const [jurusan, setJurusan] = useState("");
+  const navigate = useNavigate();
+
   const confirmDelete = (e) => {
     immediateToast("question", {
       timeout: 20000,
@@ -321,6 +324,9 @@ const Kelas = () => {
       })
       .catch((err) => {
         console.log(err);
+        if (err.response.status === 403) {
+          navigate("/dashboard");
+        }
       });
 
     return data;

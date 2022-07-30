@@ -19,13 +19,15 @@ import "simplebar/dist/simplebar.min.css";
 
 // sidebar nav config
 import navigation from "../_nav";
+import userNavigation from "../_userNav";
 import { cilBell } from "@coreui/icons";
+import { useAuthenticated } from "src/store/index";
 
 const AppSidebar = () => {
   const dispatch = useDispatch();
   const unfoldable = useSelector((state) => state.sidebarUnfoldable);
   const sidebarShow = useSelector((state) => state.sidebarShow);
-
+  const [authenticated, setAuthenticated] = useAuthenticated();
   return (
     <CSidebar
       position="fixed"
@@ -45,7 +47,11 @@ const AppSidebar = () => {
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
-          <AppSidebarNav items={navigation} />
+          {authenticated.user.status === "admin" ? (
+            <AppSidebarNav items={navigation} />
+          ) : (
+            <AppSidebarNav items={userNavigation} />
+          )}
         </SimpleBar>
       </CSidebarNav>
       <CSidebarToggler

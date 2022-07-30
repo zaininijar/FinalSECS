@@ -10,11 +10,13 @@ import {
 } from "src/assets/icons";
 import Modal from "src/components/Modal";
 import dateFormatter from "src/tools/DateFormatter";
+import { useNavigate } from "react-router-dom";
 
 const Dosen = () => {
   const DOSEN_URL = "/dosen/";
   const access_token = localStorage.getItem("access_token");
   const [dosen, setDosen] = useState("");
+  const navigate = useNavigate();
   const confirmDelete = (e) => {
     immediateToast("question", {
       timeout: 20000,
@@ -211,8 +213,10 @@ const Dosen = () => {
                   setPassword({ msgErr: "", value: "" });
                   setConfirmPassword({ msgErr: "", value: "" });
                 }}
-                onSubmit={() => {
-                  updatePasswordDosen(row.id);
+                onSubmit={async () => {
+                  await updatePasswordDosen(row.id).then((res) => {
+                    return res;
+                  });
                 }}
               >
                 <div>
@@ -369,6 +373,9 @@ const Dosen = () => {
         data = res.data.data;
       })
       .catch((err) => {
+        if (err.response.status === 403) {
+          navigate("/dashboard");
+        }
         console.log(err);
       });
 

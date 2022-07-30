@@ -10,6 +10,7 @@ import {
 } from "src/assets/icons";
 import Modal from "src/components/Modal";
 import dateFormatter from "src/tools/DateFormatter";
+import { useNavigate } from "react-router-dom";
 
 const Mahasiswa = () => {
   const MAHASISWA_URL = "/mahasiswa/";
@@ -17,6 +18,7 @@ const Mahasiswa = () => {
   const access_token = localStorage.getItem("access_token");
   const [mahasiswa, setMahasiswa] = useState("");
   const [kelas, setKelas] = useState("");
+  const navigate = useNavigate();
   const confirmDelete = (e) => {
     immediateToast("question", {
       timeout: 20000,
@@ -246,8 +248,10 @@ const Mahasiswa = () => {
                   setPassword({ msgErr: "", value: "" });
                   setConfirmPassword({ msgErr: "", value: "" });
                 }}
-                onSubmit={() => {
-                  updatePasswordMahasiswa(row.id);
+                onSubmit={async () => {
+                  await updatePasswordMahasiswa(row.id).then((res) => {
+                    return res;
+                  });
                 }}
               >
                 <div>
@@ -423,6 +427,9 @@ const Mahasiswa = () => {
         data = res.data.data;
       })
       .catch((err) => {
+        if (err.response.status === 403) {
+          navigate("/dashboard");
+        }
         console.log(err);
       });
 

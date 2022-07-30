@@ -6,11 +6,14 @@ import axios from "src/api/axios";
 import { DeleteIconWhite, EditIcon2White } from "src/assets/icons";
 import Modal from "src/components/Modal";
 import dateFormatter from "src/tools/DateFormatter";
+import { useNavigate } from "react-router-dom";
 
 const TahunPelajaran = () => {
   const TAHUN_PELAJARAN_URL = "/tahun-pelajaran/";
   const access_token = localStorage.getItem("access_token");
   const [tahunPelajaran, setTahunPelajaran] = useState("");
+  const navigate = useNavigate();
+
   const confirmDelete = (e) => {
     immediateToast("question", {
       timeout: 20000,
@@ -267,6 +270,9 @@ const TahunPelajaran = () => {
         data = res.data.data;
       })
       .catch((err) => {
+        if (err.response.status === 403) {
+          navigate("/dashboard");
+        }
         console.log(err);
       });
 
