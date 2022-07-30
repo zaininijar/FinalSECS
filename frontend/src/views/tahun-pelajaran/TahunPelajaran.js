@@ -76,6 +76,13 @@ const TahunPelajaran = () => {
     });
   };
 
+  const alertDanger = (message) => {
+    immediateToast("info", {
+      message: message,
+      color: "red",
+    });
+  };
+
   useEffect(() => {
     getTahunPelajaran(access_token).then((res) => {
       setTahunPelajaran(res);
@@ -121,8 +128,10 @@ const TahunPelajaran = () => {
                 onClick={() => {
                   getTahunPelajaranById(row.id);
                 }}
-                onSubmit={() => {
-                  updateTahunPelajaran(row.id);
+                onSubmit={async () => {
+                  await updateTahunPelajaran(row.id).then((res) => {
+                    return res;
+                  });
                 }}
                 btnTitle={<EditIcon2White width={15} />}
               >
@@ -278,6 +287,8 @@ const TahunPelajaran = () => {
   };
 
   const addTahunPelajaran = async () => {
+    let isSuccess = true;
+
     await axios
       .post(
         TAHUN_PELAJARAN_URL,
@@ -293,9 +304,12 @@ const TahunPelajaran = () => {
         alertSuccess(res.data.message);
       })
       .catch((err) => {
-        alertSuccess(err.message);
+        err.response.data.message.map((err) => {
+          alertDanger(err);
+        });
+        isSuccess = false;
       });
-    return;
+    return isSuccess;
   };
 
   const updateTahunPelajaran = async (id) => {
