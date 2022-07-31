@@ -12,6 +12,8 @@ import { TapelModule } from './tapel/tapel.module';
 import { JadwalModule } from './jadwal/jadwal.module';
 import { MatkulMahasiswaModule } from './matkul_mahasiswa/matkul_mahasiswa.module';
 import { NilaiModule } from './nilai/nilai.module';
+import { ListMahasiswaModule } from './list_mahasiswa/list_mahasiswa.module';
+import { ListMatakuliahModule } from './list_matakuliah/list_matakuliah.module';
 
 @Module({
   imports: [
@@ -20,7 +22,7 @@ import { NilaiModule } from './nilai/nilai.module';
     }),
     AuthModule, 
     UserModule,  
-    PrismaModule, DosenModule, MahasiswaModule, JurusanModule, KelasModule, MatkulModule, TapelModule, JadwalModule, MatkulMahasiswaModule, NilaiModule,
+    PrismaModule, DosenModule, MahasiswaModule, JurusanModule, KelasModule, MatkulModule, TapelModule, JadwalModule, MatkulMahasiswaModule, NilaiModule, ListMahasiswaModule, ListMatakuliahModule,
   ],
 })
 export class AppModule {}

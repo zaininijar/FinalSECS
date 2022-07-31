@@ -31,13 +31,12 @@ export class NilaiController {
         return this.nilaiService.getNilaiById(userData['status'], userData['id'], nilaiId)
     }
 
-    @Get('matakuliah/:id/:idTapel')
-    getNilaiByMatkulId(
+    @Get('jadwal/:id/')
+    getNilaiByJadwalId(
         @GetUser('data') userData,
-        @Param('id', ParseIntPipe) mapelId: number,
-        @Param('idTapel', ParseIntPipe) tapelId: number
+        @Param('id', ParseIntPipe) jadwalId: number
     ){
-        return this.nilaiService.getNilaiByMatkulId(userData['status'], userData['id'], mapelId, tapelId)
+        return this.nilaiService.getNilaiByJadwalId(userData['status'], userData['id'], jadwalId)
     }
 
     @Get()
@@ -55,7 +54,7 @@ export class NilaiController {
         @Body() dto: CreateNilaiDto
     ){
         return this.nilaiService.createNilai(userData['status'], userData['id'], dto)
-    }
+    } 
 
     @Put(':id')
     editNilaiById(

@@ -114,7 +114,6 @@ model Matakuliah {
 
   jadwal Jadwal[]
   matkulmahasiswa MatakuliahMahasiswa[]
-  nilai Nilai[]
 }
 
 model Jadwal {
@@ -136,6 +135,8 @@ model Jadwal {
   matkul Matakuliah @relation(fields: [matkul_id], references: [id])
   kelas Kelas @relation(fields: [kelas_id], references: [id])
   tapel TahunPelajaran @relation(fields: [tapel_id], references: [id])
+
+  nilai Nilai[]
 
 }
 
@@ -160,15 +161,13 @@ model TahunPelajaran{
   updatedAt DateTime @updatedAt
 
   jadwal Jadwal[]
-  nilai Nilai[]
 }
 
 
 model Nilai{
   id Int @id @default(autoincrement())
   mahasiswa_id Int
-  matkul_id Int
-  tapel_id Int
+  jadwal_id Int
 
   nilai String
   bobot Int?
@@ -177,6 +176,5 @@ model Nilai{
   updatedAt DateTime @updatedAt
 
   mahasiswa Mahasiswa @relation(fields: [mahasiswa_id], references: [id])
-  matkul Matakuliah @relation(fields: [matkul_id], references: [id])
-  tapel TahunPelajaran  @relation(fields: [tapel_id], references: [id])
+  jadwal Jadwal @relation(fields: [jadwal_id], references: [id])
 }

@@ -4,14 +4,10 @@ export class CreateNilaiDto{
     @IsInt()
     @IsNotEmpty()
     mahasiswa_id: number;
-
-    @IsInt()
-    @IsNotEmpty()
-    matkul_id: number;
     
     @IsInt()
     @IsNotEmpty()
-    tapel_id: number;
+    jadwal_id: number;
 
     @IsString()
     @IsNotEmpty()

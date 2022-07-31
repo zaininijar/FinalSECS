@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateJadwalDto, EditJadwalDto } from './dto';
 
@@ -101,6 +101,38 @@ export class JadwalService {
 
         this.verifyAdmin(userStatus)
 
+        const checkJadwal = await this.prisma.jadwal.findFirst({
+            where: {
+                matkul_id: dto.matkul_id,
+                kelas_id: dto.kelas_id,
+                tapel_id: dto.tapel_id
+            }
+        })
+
+        if(checkJadwal){
+            throw new BadRequestException(
+                'Jadwal Sudah Ada'
+            )
+        }
+
+        const matkul = await this.prisma.matakuliah.findUnique({
+            where: {
+                id: dto.matkul_id
+            }
+        })
+
+        const kelas = await this.prisma.kelas.findUnique({
+            where: {
+                id: dto.kelas_id
+            }
+        })
+
+        if(matkul.jurusan_id !== kelas.jurusan_id){
+            throw new BadRequestException(
+                'Matakuliah dan Kelas tidak boleh beda jurusan'
+            )
+        }
+
         const jadwal = await this.prisma.jadwal.create({
             data: {
                 ...dto
@@ -128,6 +160,24 @@ export class JadwalService {
         if(!jadwal){
             throw new NotFoundException(
                 'Data Jadwal Tidak Ditemukan'
+            )
+        }
+
+        const matkul = await this.prisma.matakuliah.findUnique({
+            where: {
+                id: dto.matkul_id
+            }
+        })
+
+        const kelas = await this.prisma.kelas.findUnique({
+            where: {
+                id: dto.kelas_id
+            }
+        })
+
+        if(matkul.jurusan_id !== kelas.jurusan_id){
+            throw new BadRequestException(
+                'Matakuliah dan Kelas tidak boleh beda jurusan'
             )
         }
 

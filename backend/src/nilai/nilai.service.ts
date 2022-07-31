@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateNilaiDto, EditNilaiDto } from './dto';
 
@@ -30,7 +30,7 @@ export class NilaiService {
         }
     }
 
-    async getNilaiByMatkulId(userStatus: string, userId: number, matkulId: number, tapel: number){
+    async getNilaiByJadwalId(userStatus: string, userId: number, jadwalId: number){
         this.verifyDosen(userStatus)
 
         const dosen = await this.prisma.dosen.findFirst({
@@ -39,21 +39,19 @@ export class NilaiService {
             }
         })
 
-        const tahunPelajaran = await this.prisma.tahunPelajaran.findFirst({
+        const jadwal = await this.prisma.jadwal.findUnique({
             where: {
-                id: tapel
+                id: jadwalId
             }
         })
 
-        const mapelDosen = await this.prisma.jadwal.findFirst({
-            where: {
-                dosen_id: dosen.id,
-                matkul_id: matkulId,
-                tapel_id: tahunPelajaran.id
-            }
-        })
+        if(!jadwal){
+            throw new NotFoundException(
+                'Jadwal Tidak Ditemukan'
+            )
+        }
 
-        if(!mapelDosen){
+        if(dosen.id !== jadwal.dosen_id){
             throw new ForbiddenException(
                 'Anda tidak memiliki Hak untuk Melihat Nilai Ini!'
             )
@@ -61,8 +59,7 @@ export class NilaiService {
 
         const nilai = await this.prisma.nilai.findMany({
             where: {
-                matkul_id: matkulId,
-                tapel_id: tahunPelajaran.id
+                jadwal_id: jadwalId
             },
             include: {
                 mahasiswa: {
@@ -70,8 +67,11 @@ export class NilaiService {
                         kelas: true
                     }
                 },
-                matkul: true,
-                tapel: true
+                jadwal: {
+                    select: {
+                        matkul: true
+                    }
+                }
             } 
         })
 
@@ -96,7 +96,11 @@ export class NilaiService {
                 mahasiswa_id: mahasiswa.id
             },
             include: {
-                matkul: true
+                jadwal: {
+                    select: {
+                        matkul: true
+                    }
+                }
             }
         })
 
@@ -121,8 +125,11 @@ export class NilaiService {
                 mahasiswa_id: mahasiswa.id
             },
             include: {
-                matkul: true,
-                tapel: true
+                jadwal: {
+                    select: {
+                        matkul: true
+                    }
+                }
             }
         })
 
@@ -155,15 +162,13 @@ export class NilaiService {
             }
         })
 
-        const mapelDosen = await this.prisma.jadwal.findFirst({
+        const jadwal = await this.prisma.jadwal.findUnique({
             where: {
-                dosen_id: dosen.id,
-                matkul_id: nilai.matkul_id,
-                tapel_id: nilai.tapel_id
+                id: nilai.jadwal_id
             }
         })
 
-        if(!mapelDosen){
+        if(dosen.id !== jadwal.dosen_id){
             throw new ForbiddenException(
                 'Anda tidak memiliki Hak untuk Melihat Nilai Ini!'
             )
@@ -176,6 +181,8 @@ export class NilaiService {
         }
     }
 
+    // async getMahasiswa(userStatus: string, userId: number, )
+
     async createNilai(userStatus: string, userId: number, dto: CreateNilaiDto){
 
         this.verifyDosen(userStatus)
@@ -186,15 +193,13 @@ export class NilaiService {
             }
         })
 
-        const matkulDosen = await this.prisma.jadwal.findFirst({
+        const jadwal = await this.prisma.jadwal.findUnique({
             where: {
-                matkul_id: dto.matkul_id,
-                dosen_id: dosen.id,
-                tapel_id: dto.tapel_id
+                id: dto.jadwal_id
             }
         })
 
-        if(!matkulDosen){
+        if(dosen.id !== jadwal.dosen_id){
             throw new ForbiddenException(
                 'Anda tidak memiliki Hak untuk Menginput Nilai Ini!'
             )
@@ -206,7 +211,7 @@ export class NilaiService {
             }
         })
 
-        if(matkulDosen.kelas_id !== mahasiswa.kelas_id){
+        if(jadwal.kelas_id !== mahasiswa.kelas_id){
             throw new ForbiddenException(
                 'Anda tidak memiliki Hak untuk Menginput Nilai Mahasiswa diKelas lain!'
             )
@@ -214,7 +219,7 @@ export class NilaiService {
 
         const matkul = await this.prisma.matakuliah.findFirst({
             where: {
-                id: dto.matkul_id
+                id: jadwal.matkul_id
             }
         })
 
@@ -222,7 +227,7 @@ export class NilaiService {
             const matkulMahasiswa = await this.prisma.matakuliahMahasiswa.findFirst({
                 where: {
                     mahasiswa_id: dto.mahasiswa_id,
-                    matkul_id: dto.matkul_id
+                    matkul_id: jadwal.matkul_id
                 }
             })
 
@@ -245,6 +250,19 @@ export class NilaiService {
             bobot = 1
         }else{
             bobot = 0
+        }
+
+        const checkNilai = await this.prisma.nilai.findFirst({
+            where: {
+                mahasiswa_id: dto.mahasiswa_id,
+                jadwal_id: dto.jadwal_id
+            }
+        })
+
+        if(checkNilai){
+            throw new BadRequestException(
+                'Nilai Sudah Ada'
+            )
         }
 
         const nilai = await this.prisma.nilai.create({
@@ -286,18 +304,30 @@ export class NilaiService {
             }
         })
 
-        const mapelDosen = await this.prisma.jadwal.findFirst({
+        const jadwal = await this.prisma.jadwal.findUnique({
             where: {
-                dosen_id: dosen.id,
-                matkul_id: nilai.matkul_id,
-                tapel_id: nilai.tapel_id
+                id: nilai.jadwal_id
             }
         })
 
-        if(!mapelDosen){
+        if(dosen.id !== jadwal.dosen_id){
             throw new ForbiddenException(
                 'Anda tidak memiliki Hak untuk Merubah Nilai Ini!'
             )
+        }
+
+        let bobot;
+
+        if(dto.nilai === "A"){
+            bobot = 4
+        }else if(dto.nilai === "B"){
+            bobot = 3
+        }else if(dto.nilai === "C"){
+            bobot = 2
+        }else if(dto.nilai === "D"){
+            bobot = 1
+        }else{
+            bobot = 0
         }
 
         const editNilai = await this.prisma.nilai.update({
@@ -305,7 +335,8 @@ export class NilaiService {
                 id: nilaiId
             },
             data: {
-                ...dto
+                ...dto,
+                bobot
             }
         })
 
@@ -337,15 +368,13 @@ export class NilaiService {
             }
         })
 
-        const mapelDosen = await this.prisma.jadwal.findFirst({
+        const jadwal = await this.prisma.jadwal.findUnique({
             where: {
-                dosen_id: dosen.id,
-                matkul_id: nilai.matkul_id,
-                tapel_id: nilai.tapel_id
+                id: nilai.jadwal_id
             }
         })
 
-        if(!mapelDosen){
+        if(dosen.id !== jadwal.dosen_id){
             throw new ForbiddenException(
                 'Anda tidak memiliki Hak untuk Menghapus Nilai Ini!'
             )
@@ -378,7 +407,11 @@ export class NilaiService {
                 mahasiswa_id: mahasiswa.id,
             },
             include: {
-                matkul: true
+                jadwal: {
+                    include: {
+                        matkul: true
+                    }
+                }
             }
         })
 
@@ -389,7 +422,7 @@ export class NilaiService {
         let totalPoint = 0;
 
         nilai.forEach(nilai => dataBobot.push(nilai.bobot))
-        nilai.forEach(sks => dataSKS.push(sks.matkul.sks))
+        nilai.forEach(sks => dataSKS.push(sks.jadwal.matkul.sks))
 
         for(let i = 0; i < dataBobot.length; i++ ){
             jmlSKS += dataSKS[i];

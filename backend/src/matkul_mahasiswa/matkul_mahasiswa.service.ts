@@ -100,6 +100,19 @@ export class MatkulMahasiswaService {
             )
         }
 
+        const checkMatkul = await this.prisma.matakuliahMahasiswa.findFirst({
+            where: {
+                matkul_id: dto.matkul_id,
+                mahasiswa_id: dto.mahasiswa_id
+            }
+        })
+
+        if(checkMatkul){
+            throw new BadRequestException(
+                'Matakuliah Sudah Terpilih'
+            )
+        }
+
         const matakuliahMahasiswa = await this.prisma.matakuliahMahasiswa.create({
             data: {
                 ...dto
@@ -158,6 +171,19 @@ export class MatkulMahasiswaService {
         if(!matakuliah.matkulPilihan){
             throw new BadRequestException(
                 'Anda tidak dapat memilih matakuliah ini'
+            )
+        }
+
+        const checkMatkul = await this.prisma.matakuliahMahasiswa.findFirst({
+            where: {
+                matkul_id: dto.matkul_id,
+                mahasiswa_id: dto.mahasiswa_id
+            }
+        })
+
+        if(checkMatkul){
+            throw new BadRequestException(
+                'Matakuliah Sudah Terpilih'
             )
         }
 
@@ -263,6 +289,19 @@ export class MatkulMahasiswaService {
         if(!matakuliah.matkulPilihan){
             throw new BadRequestException(
                 'Anda tidak dapat memilih matakuliah ini'
+            )
+        }
+
+        const checkMatkul = await this.prisma.matakuliahMahasiswa.findFirst({
+            where: {
+                matkul_id: dto.matkul_id,
+                mahasiswa_id: mahasiswa.id
+            }
+        })
+
+        if(checkMatkul){
+            throw new BadRequestException(
+                'Matakuliah Sudah Terpilih'
             )
         }
 
