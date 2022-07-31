@@ -1,10 +1,6 @@
 import { IsInt, IsNotEmpty } from "class-validator";
 
-export class CreateMatkulMahasiswaDto{
-    @IsInt()
-    @IsNotEmpty()
-    mahasiswa_id: number;
-
+export class CreateMatkulMeDto{
     @IsInt()
     @IsNotEmpty()
     matkul_id: number;

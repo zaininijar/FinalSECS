@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateMatakuliahDto, EditMatakuliahDto } from './dto';
 
@@ -60,6 +60,18 @@ export class MatkulService {
 
         this.verifyAdmin(userStatus)
 
+        const checkKodeMatkul = await this.prisma.matakuliah.findFirst({
+            where: {
+                kode_matakuliah: dto.kode_matakuliah
+            }
+        })
+        
+        if(checkKodeMatkul){
+            throw new BadRequestException(
+                `Matakuliah dengan Kode : ${dto.kode_matakuliah} Sudah ada`
+            )
+        }
+
         // save the new matakuliah in the db
         const matakuliah = await this.prisma.matakuliah.create({
             data:{
@@ -91,6 +103,20 @@ export class MatkulService {
                 'Data Matakuliah Tidak Ditemukan'
             )
         }
+
+        const checkKodeMatkul = await this.prisma.matakuliah.findFirst({
+            where: {
+                kode_matakuliah: dto.kode_matakuliah
+            }
+        })
+
+        if(checkKodeMatkul){
+            if(checkKodeMatkul.kode_matakuliah !== matakuliah.kode_matakuliah){
+                throw new BadRequestException(
+                    `Matakuliah dengan Kode : ${dto.kode_matakuliah} Sudah ada`
+                )
+            }
+        } 
 
         const editMatakuliah = await this.prisma.matakuliah.update({
             where: {

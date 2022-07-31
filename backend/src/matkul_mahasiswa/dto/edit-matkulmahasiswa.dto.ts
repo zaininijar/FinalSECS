@@ -7,9 +7,5 @@ export class EditMatkulMahasiswaDto{
 
     @IsInt()
     @IsOptional()
-    matakuliah_id: number;
-
-    @IsInt()
-    @IsOptional()
-    semester: number;
+    matkul_id: number;
 }

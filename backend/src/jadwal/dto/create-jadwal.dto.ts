@@ -7,7 +7,7 @@ export class CreateJadwalDto{
 
     @IsInt()
     @IsNotEmpty()
-    matakuliah_id: number;
+    matkul_id: number;
 
     @IsInt()
     @IsNotEmpty()
@@ -19,5 +19,14 @@ export class CreateJadwalDto{
 
     @IsString()
     @IsNotEmpty()
-    hari: String;
+    hari: string;
+
+    @IsString()
+    @IsNotEmpty()
+    jam_mulai: string;
+
+    @IsString()
+    @IsNotEmpty()
+    jam_selesai: string;
+    
 }

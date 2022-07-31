@@ -67,6 +67,7 @@ model Mahasiswa{
   kelas Kelas @relation(fields: [kelas_id], references: [id])
 
   matkulmahasiswa MatakuliahMahasiswa[]
+  nilai Nilai[]
 }
 
 model Jurusan {
@@ -101,8 +102,10 @@ model Matakuliah {
 
   kode_matakuliah String
   nama_matakuliah String
-  semester String?
-  sks String
+  semester Int?
+  sks Int
+
+  matkulPilihan Boolean
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -111,6 +114,7 @@ model Matakuliah {
 
   jadwal Jadwal[]
   matkulmahasiswa MatakuliahMahasiswa[]
+  nilai Nilai[]
 }
 
 model Jadwal {
@@ -121,8 +125,8 @@ model Jadwal {
   tapel_id Int
 
   hari String
-  jam_mulai DateTime @db.Time()
-  jam_selesai DateTime @db.Time()
+  jam_mulai String
+  jam_selesai String
 
 
   createdAt DateTime @default(now())
@@ -139,7 +143,6 @@ model MatakuliahMahasiswa{
   id Int @id @default(autoincrement())
   mahasiswa_id Int
   matkul_id Int
-  semester Int
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -157,5 +160,23 @@ model TahunPelajaran{
   updatedAt DateTime @updatedAt
 
   jadwal Jadwal[]
+  nilai Nilai[]
 }
 
+
+model Nilai{
+  id Int @id @default(autoincrement())
+  mahasiswa_id Int
+  matkul_id Int
+  tapel_id Int
+
+  nilai String
+  bobot Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  mahasiswa Mahasiswa @relation(fields: [mahasiswa_id], references: [id])
+  matkul Matakuliah @relation(fields: [matkul_id], references: [id])
+  tapel TahunPelajaran  @relation(fields: [tapel_id], references: [id])
+}

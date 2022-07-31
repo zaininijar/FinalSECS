@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateMahasiswaDto, EditMahasiswaDto } from "./dto";
 import * as argon from 'argon2';
@@ -39,7 +39,7 @@ export class MahasiswaService{
 
     async getMahasiswaById(userStatus: string, mahasiswaId: number){
         this.verifyAdmin(userStatus)
-        const mahasiswa = await this.prisma.mahasiswa.findFirst({
+        const mahasiswa = await this.prisma.mahasiswa.findUnique({
             where: {
                 id: mahasiswaId
             },
@@ -53,6 +53,12 @@ export class MahasiswaService{
             }
         })
 
+        if(!mahasiswa){
+            throw new NotFoundException(
+                'Data Mahasiswa Tidak Ditemukan'
+            )
+        }
+
         return {
             status: 'success',
             message: `Data Mahasiswa dengan ID : ${mahasiswaId} Berhasil Ditampilkan`,
@@ -63,6 +69,30 @@ export class MahasiswaService{
     async createMahasiswa(userStatus: string, dto: CreateMahasiswaDto){
 
         this.verifyAdmin(userStatus)
+
+        const checkNimMahasiswa = await this.prisma.mahasiswa.findFirst({
+            where: {
+                nim: dto.nim
+            }
+        })
+        
+        if(checkNimMahasiswa){
+            throw new BadRequestException(
+                `Mahasiswa dengan NIM : ${dto.nim} Sudah ada`
+            )
+        }
+        
+        const checkUsernameUser = await this.prisma.user.findFirst({
+            where: {
+                username: dto.username
+            }
+        })
+        
+        if(checkUsernameUser){
+            throw new BadRequestException(
+                `User dengan username : ${dto.username} Sudah ada`
+            )
+        }
 
         // generate the password hash
         const password = await argon.hash(dto.password);
@@ -109,12 +139,49 @@ export class MahasiswaService{
             }
         })
 
+        const user = await this.prisma.user.findFirst({
+            where: {
+                id: mahasiswa.user_id
+            }
+        })
+
         if(!mahasiswa){
             throw new NotFoundException(
                 'Data Mahasiswa Tidak Ditemukan'
             )
         }
 
+        const checkNimMahasiswa = await this.prisma.mahasiswa.findFirst({
+            where: {
+                nim: dto.nim
+            },
+            select: {
+                id: true
+            }
+        })
+
+        if(checkNimMahasiswa){
+            if(checkNimMahasiswa.id !== mahasiswaId){
+                throw new BadRequestException(
+                    `Mahasiswa dengan NIM : ${dto.nim} Sudah ada`
+                )
+            }
+        }        
+
+        const checkUsernameUser = await this.prisma.user.findFirst({
+            where: {
+                username: dto.username
+            }
+        })
+
+        if(checkUsernameUser){
+            if(checkUsernameUser.username !== user.username){ 
+                throw new BadRequestException(
+                    `User dengan username : ${dto.username} Sudah ada`
+                )
+            }
+        }
+        
         const editMahasiswa = await this.prisma.mahasiswa.update({
             where: {
                 id: mahasiswaId

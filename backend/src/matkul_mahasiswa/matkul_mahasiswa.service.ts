@@ -1,6 +1,6 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateMatkulMahasiswaDto, EditMatkulMahasiswaDto } from './dto';
+import { CreateMatkulMahasiswaDto, CreateMatkulMeDto, EditMatkulMahasiswaDto } from './dto';
 
 @Injectable()
 export class MatkulMahasiswaService {
@@ -8,6 +8,14 @@ export class MatkulMahasiswaService {
 
     verifyAdmin(status){
         if(status !== 'admin'){
+            throw new ForbiddenException(
+                'Anda tidak memiliki akses untuk request ini!'
+            )
+        }
+    }
+
+    verifyMahasiswa(status){
+        if(status !== 'mahasiswa'){
             throw new ForbiddenException(
                 'Anda tidak memiliki akses untuk request ini!'
             )
@@ -60,11 +68,41 @@ export class MatkulMahasiswaService {
 
         this.verifyAdmin(userStatus)
 
+
+        const mahasiswa = await this.prisma.mahasiswa.findUnique({
+            where: {
+                id: dto.mahasiswa_id
+            },
+            include: {
+                kelas: {
+                    include: {
+                        jurusan: true
+                    }
+                }
+            }
+        })
+
+        const matakuliah = await this.prisma.matakuliah.findUnique({
+            where: {
+                id: dto.matkul_id
+            }
+        })
+
+        if(mahasiswa.kelas.jurusan.id !== matakuliah.jurusan_id){
+            throw new BadRequestException(
+                'Anda tidak dapat memilih matakuliah dari Jurusan Lain'
+            )
+        }
+
+        if(!matakuliah.matkulPilihan){
+            throw new BadRequestException(
+                'Anda tidak dapat memilih matakuliah ini'
+            )
+        }
+
         const matakuliahMahasiswa = await this.prisma.matakuliahMahasiswa.create({
             data: {
-                semester: dto.semester,
-                mahasiswa_id: dto.mahasiswa_id,
-                matkul_id: dto.matakuliah_id
+                ...dto
             }
         });
 
@@ -92,14 +130,43 @@ export class MatkulMahasiswaService {
             )
         }
 
+        const mahasiswa = await this.prisma.mahasiswa.findUnique({
+            where: {
+                id: dto.mahasiswa_id
+            },
+            include: {
+                kelas: {
+                    include: {
+                        jurusan: true
+                    }
+                }
+            }
+        })
+
+        const matakuliah = await this.prisma.matakuliah.findUnique({
+            where: {
+                id: dto.matkul_id
+            }
+        })
+
+        if(mahasiswa.kelas.jurusan.id !== matakuliah.jurusan_id){
+            throw new BadRequestException(
+                'Anda tidak dapat memilih matakuliah dari Jurusan Lain'
+            )
+        }
+
+        if(!matakuliah.matkulPilihan){
+            throw new BadRequestException(
+                'Anda tidak dapat memilih matakuliah ini'
+            )
+        }
+
         const editMatakuliahMahasiswa = await this.prisma.matakuliahMahasiswa.update({
             where: {
                 id: matkulMahasiswaId
             },
             data: {
-                mahasiswa_id: dto.mahasiswa_id,
-                matkul_id: dto.matakuliah_id,
-                semester: dto.semester,
+                ...dto
             }
         })
 
@@ -134,6 +201,122 @@ export class MatkulMahasiswaService {
         return {
             status: 'success',
             message: 'Data Matakuliah Mahasiswa Berhasil Dihapus',
+        }
+    }
+
+    async getMatkulMe(userStatus: string, userId: number){
+        this.verifyMahasiswa(userStatus)
+
+        const mahasiswa = await this.prisma.mahasiswa.findFirst({
+            where: {
+                user_id: userId
+            }
+        })
+
+        const matakuliahMahasiswa = await this.prisma.matakuliahMahasiswa.findMany({
+            where: {
+                mahasiswa_id: mahasiswa.id
+            },
+            include: {
+                mahasiswa: true,
+                matkul: true
+            }
+        })
+
+        return {
+            status: 'success',
+            message: 'Data Matakuliah Anda Berhasil Ditampilkan',
+            data: matakuliahMahasiswa
+        }
+    }
+
+    async createMatkulMe(userStatus: string, userId: number, dto: CreateMatkulMeDto){
+
+        this.verifyMahasiswa(userStatus)
+
+
+        const mahasiswa = await this.prisma.mahasiswa.findFirst({
+            where: {
+                user_id: userId
+            },
+            include: {
+                kelas: {
+                    include: {
+                        jurusan: true
+                    }
+                }
+            }
+        })
+
+        const matakuliah = await this.prisma.matakuliah.findUnique({
+            where: {
+                id: dto.matkul_id
+            }
+        })
+
+        if(mahasiswa.kelas.jurusan.id !== matakuliah.jurusan_id){
+            throw new BadRequestException(
+                'Anda tidak dapat memilih matakuliah dari Jurusan Lain'
+            )
+        }
+
+        if(!matakuliah.matkulPilihan){
+            throw new BadRequestException(
+                'Anda tidak dapat memilih matakuliah ini'
+            )
+        }
+
+        const createMatakuliahMe = await this.prisma.matakuliahMahasiswa.create({
+            data: {
+                mahasiswa_id: mahasiswa.id,
+                matkul_id: dto.matkul_id
+            }
+        });
+
+        return {
+            status: 'success',
+            message: 'Matakuliah Anda Berhasil Ditambahkan',
+            data: createMatakuliahMe
+        }
+  
+    }
+
+    async deleteMatkulMeById(userStatus: string, userId: number, matkulMeId: number){
+        this.verifyMahasiswa(userStatus)
+
+        const matakuliahMe = await this.prisma.matakuliahMahasiswa.findUnique({
+            where: {
+                id: matkulMeId
+            }
+        })
+
+        const mahasiswa = await this.prisma.mahasiswa.findFirst({
+            where: {
+                user_id: userId
+            }
+        })
+
+        if(!matakuliahMe){
+            throw new NotFoundException(
+                'Data Matakuliah Anda Tidak Ditemukan'
+            )
+        }
+
+        if(matakuliahMe.mahasiswa_id !== mahasiswa.id){
+            throw new ForbiddenException(
+                'Anda Tidak Bisa Menghapus Matakuliah Mahasiswa Lain'
+            )
+        }
+        
+        await this.prisma.matakuliahMahasiswa.delete({
+            where: {
+                id: matkulMeId
+            }
+        })
+
+        return {
+            status: 'success',
+            message: 'Data Matakuliah Anda Berhasil Dihapus',
         }
     }
 }

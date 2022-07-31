@@ -1,4 +1,4 @@
-import {IsInt, IsNotEmpty, IsString } from "class-validator";
+import {IsBoolean, IsInt, IsNotEmpty, IsString } from "class-validator";
 
 export class CreateMatakuliahDto{
     @IsString()
@@ -9,13 +9,17 @@ export class CreateMatakuliahDto{
     @IsNotEmpty()
     nama_matakuliah: string;
 
-    @IsString()
+    @IsInt()
     @IsNotEmpty()
-    semester: string;
+    semester: number;
 
-    @IsString()
+    @IsInt()
     @IsNotEmpty()
-    sks: string;
+    sks: number;
+
+    @IsBoolean()
+    @IsNotEmpty()
+    matkulPilihan: boolean;
 
     @IsInt()
     @IsNotEmpty()

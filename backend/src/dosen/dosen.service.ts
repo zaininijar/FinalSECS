@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateDosenDto, EditDosenDto } from "./dto";
 import * as argon from 'argon2'
@@ -63,6 +63,30 @@ export class DosenService{
 
         this.verifyAdmin(userStatus)
 
+        const checkNipDosen = await this.prisma.dosen.findFirst({
+            where: {
+                nip: dto.nip
+            }
+        })
+        
+        if(checkNipDosen){
+            throw new BadRequestException(
+                `Dosen dengan NIP : ${dto.nip} Sudah ada`
+            )
+        }
+        
+        const checkUsernameUser = await this.prisma.user.findFirst({
+            where: {
+                username: dto.username
+            }
+        })
+        
+        if(checkUsernameUser){
+            throw new BadRequestException(
+                `User dengan username : ${dto.username} Sudah ada`
+            )
+        }
+
         // generate the password hash
         const password = await argon.hash(dto.password);
 
@@ -109,6 +133,30 @@ export class DosenService{
         if(!dosen){
             throw new NotFoundException(
                 'Data Dosen Tidak Ditemukan'
+            )
+        }
+
+        const checkNipDosen = await this.prisma.dosen.findFirst({
+            where: {
+                nip: dto.nip
+            }
+        })
+        
+        if(checkNipDosen){
+            throw new BadRequestException(
+                `Dosen dengan NIP : ${dto.nip} Sudah ada`
+            )
+        }
+        
+        const checkUsernameUser = await this.prisma.user.findFirst({
+            where: {
+                username: dto.username
+            }
+        })
+        
+        if(checkUsernameUser){
+            throw new BadRequestException(
+                `User dengan username : ${dto.username} Sudah ada`
             )
         }
 

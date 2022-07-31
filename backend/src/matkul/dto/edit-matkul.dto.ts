@@ -1,4 +1,4 @@
-import {IsInt, IsOptional, IsString } from "class-validator";
+import {IsBoolean, IsIn, IsInt, IsOptional, IsString } from "class-validator";
 
 export class EditMatakuliahDto{
     @IsString()
@@ -9,13 +9,17 @@ export class EditMatakuliahDto{
     @IsOptional()
     nama_matakuliah: string;
 
-    @IsString()
+    @IsInt()
     @IsOptional()
-    semester: string;
+    semester: number;
 
-    @IsString()
+    @IsInt()
     @IsOptional()
-    sks: string;
+    sks: number;
+
+    @IsBoolean()
+    @IsOptional()
+    matkulPilihan: boolean;
 
     @IsInt()
     @IsOptional()
