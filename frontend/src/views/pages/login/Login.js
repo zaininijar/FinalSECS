@@ -27,7 +27,7 @@ const Login = () => {
   const getUser = async (access_token) => {
     let user = null;
     await axios
-      .get("http://localhost:3000/users/me", {
+      .get("https://secs-api.kamari.web.id/users/me", {
         headers: {
           Authorization: "Bearer " + access_token,
         },
