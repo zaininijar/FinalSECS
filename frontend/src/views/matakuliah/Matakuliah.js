@@ -152,6 +152,17 @@ const Matakuliah = () => {
       sortable: true,
     },
     {
+      name: "Bisa Dipilih",
+      selector: (row) => {
+        if (row.matkulPilihan) {
+          return <div>Ya</div>;
+        } else {
+          return <div>Tidak</div>;
+        }
+      },
+      sortable: true,
+    },
+    {
       name: "Nama Jurusan",
       selector: (row) => row.jurusan.nama_jurusan,
       sortable: true,
@@ -273,6 +284,16 @@ const Matakuliah = () => {
                         );
                       })}
                   </CFormSelect>
+                </div>
+                <div>
+                  <CFormCheck
+                    checked={matkulPilihan}
+                    onChange={(e) => {
+                      setMatkulPilihan(e.target.checked);
+                    }}
+                    id="flexCheckDefault"
+                    label="Bisa dipilih"
+                  />
                 </div>
               </Modal>
               <CButton
@@ -442,6 +463,8 @@ const Matakuliah = () => {
     value: "",
   });
 
+  const [matkulPilihan, setMatkulPilihan] = useState(false);
+
   const handleNamaMatakuliah = (value) => {
     if (value === "") {
       setNamaMatakuliah((prev) => ({ msgErr: "Type nama matakuliah" }));
@@ -490,8 +513,9 @@ const Matakuliah = () => {
         {
           kode_matakuliah: kodeMatakuliah.value,
           nama_matakuliah: namaMatakuliah.value,
-          semester: semester.value,
-          sks: sks.value,
+          semester: parseInt(semester.value),
+          sks: parseInt(sks.value),
+          matkulPilihan: matkulPilihan,
           jurusan_id: parseInt(jurusanId.value),
         },
         { headers: { Authorization: `Bearer ${access_token}` } }
@@ -518,8 +542,9 @@ const Matakuliah = () => {
         {
           kode_matakuliah: kodeMatakuliah.value,
           nama_matakuliah: namaMatakuliah.value,
-          semester: semester.value,
-          sks: sks.value,
+          semester: parseInt(semester.value),
+          sks: parseInt(sks.value),
+          matkulPilihan: matkulPilihan,
           jurusan_id: parseInt(jurusanId.value),
         },
         { headers: { Authorization: `Bearer ${access_token}` } }
@@ -550,6 +575,7 @@ const Matakuliah = () => {
         setKodeMatakuliah({ msgErr: "", value: data.kode_matakuliah });
         setSemester({ msgErr: "", value: data.semester });
         setSks({ msgErr: "", value: data.sks });
+        setMatkulPilihan(data.matkulPilihan);
         setJurusanId({ msgErr: "", value: data.jurusan.id });
       })
       .catch((err) => {
@@ -574,6 +600,7 @@ const Matakuliah = () => {
               setKodeMatakuliah({ msgErr: "", value: "" });
               setSemester({ msgErr: "", value: "" });
               setSks({ msgErr: "", value: "" });
+              setMatkulPilihan(false);
               setJurusanId({ msgErr: "", value: "" });
             }}
             onSubmit={addMatakuliah}
@@ -664,6 +691,17 @@ const Matakuliah = () => {
                     );
                   })}
               </CFormSelect>
+            </div>
+            <div>
+              <CFormCheck
+                checked={matkulPilihan}
+                onChange={(e) => {
+                  setMatkulPilihan(e.target.checked);
+                }}
+                id="flexCheckDefault"
+                label="Bisa dipilih"
+              />
+              {/* {JSON.stringify(matkulPilihan, null, 2)} */}
             </div>
           </Modal>
         </div>

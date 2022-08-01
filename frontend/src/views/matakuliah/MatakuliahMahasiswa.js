@@ -151,11 +151,6 @@ const MatakuliahMahasiswa = () => {
       sortable: true,
     },
     {
-      name: "Semester",
-      selector: (row) => row.semester,
-      sortable: true,
-    },
-    {
       name: "Created At",
       selector: (row) => dateFormatter(row.createdAt),
       sortable: true,
@@ -206,23 +201,6 @@ const MatakuliahMahasiswa = () => {
                     }}
                     options={matakuliah && matakuliah}
                   />
-                </div>
-                <div>
-                  <label htmlFor="semester" className="mb-2">
-                    Semester
-                  </label>
-                  <CInputGroup size="sm" className="mb-3">
-                    <CFormInput
-                      onChange={(e) => {
-                        handleSemester(e.target.value);
-                      }}
-                      id="semester"
-                      value={semester.value}
-                      aria-label="Sizing example input"
-                      aria-describedby="inputGroup-sizing-sm"
-                      placeholder="Semester"
-                    />
-                  </CInputGroup>
                 </div>
               </Modal>
               <CButton
@@ -446,8 +424,7 @@ const MatakuliahMahasiswa = () => {
         MATAKULIAH_MAHASISWA_URL,
         {
           mahasiswa_id: parseInt(mahasiswaId.value.value),
-          matakuliah_id: parseInt(matakuliahId.value.value),
-          semester: parseInt(semester.value),
+          matkul_id: parseInt(matakuliahId.value.value),
         },
         { headers: { Authorization: `Bearer ${access_token}` } }
       )
@@ -474,8 +451,7 @@ const MatakuliahMahasiswa = () => {
         MATAKULIAH_MAHASISWA_URL + id,
         {
           mahasiswa_id: parseInt(mahasiswaId.value.value),
-          matakuliah_id: parseInt(matakuliahId.value.value),
-          semester: parseInt(semester.value),
+          matkul_id: parseInt(matakuliahId.value.value),
         },
         { headers: { Authorization: `Bearer ${access_token}` } }
       )
@@ -516,7 +492,6 @@ const MatakuliahMahasiswa = () => {
             label: data.matkul.nama_matakuliah,
           },
         });
-        setSemester({ msgErr: "", value: data.semester });
       })
       .catch((err) => {
         console.log(err);
@@ -567,22 +542,6 @@ const MatakuliahMahasiswa = () => {
                 }}
                 options={matakuliah && matakuliah}
               />
-            </div>
-            <div>
-              <label htmlFor="semester" className="mb-2">
-                Semester
-              </label>
-              <CInputGroup size="sm" className="mb-3">
-                <CFormInput
-                  onChange={(e) => {
-                    handleSemester(e.target.value);
-                  }}
-                  id="semester"
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-sm"
-                  placeholder="Semester"
-                />
-              </CInputGroup>
             </div>
           </Modal>
         </div>

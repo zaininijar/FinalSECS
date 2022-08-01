@@ -149,3 +149,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuY
 GET http://localhost:3000/matakuliah-mahasiswa
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkxOTQ5OTQsImV4cCI6MTY1OTI4MTM5NH0.38Fg_c9WEbhBR9vsze_Yp35B5bRuawBrb1e9hWz7NIE
 
+
+###Matakuliah GET
+GET http://localhost:3000/matakuliah/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkyOTAyODAsImV4cCI6MTY1OTM3NjY4MH0.C0yaY5ImlYNwOsmmds9LlY4azRlBaFMIP-u1pMfU9U8
+
+
+###Matakuliah Mahasiswa POST
+POST http://localhost:3000/matakuliah-mahasiswa
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkyOTAyODAsImV4cCI6MTY1OTM3NjY4MH0.C0yaY5ImlYNwOsmmds9LlY4azRlBaFMIP-u1pMfU9U8
+
+{
+    "mahasiswa_id": 1,
+    "matkul_id": 1,
+}

@@ -591,7 +591,7 @@ const Dosen = () => {
                   onChange={(e) => {
                     handlePassword(e.target.value);
                   }}
-                  type="password"
+                  type="text"
                   id="password"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-sm"
@@ -608,7 +608,7 @@ const Dosen = () => {
                   onChange={(e) => {
                     handleNip(e.target.value);
                   }}
-                  type="text"
+                  type="number"
                   id="nip"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-sm"

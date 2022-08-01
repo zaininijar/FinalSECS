@@ -1,4 +1,5 @@
 import React from "react";
+import Jadwal from "./views/jadwal/Jadwal";
 
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 const Colors = React.lazy(() => import("./views/theme/colors/Colors"));
@@ -196,6 +197,9 @@ const routes = [
 
   //tahun-pelajaran
   { path: "/tahun-pelajaran", name: "TahunPelajaran", element: TahunPelajaran },
+
+  //jadwal
+  { path: "/jadwal", name: "Jadwal", element: Jadwal },
 ];
 
 export default routes;
