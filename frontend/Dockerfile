@@ -4,10 +4,7 @@ FROM node:16.15.0-alpine AS build
 WORKDIR /app
 COPY package*.json /app/
 
-RUN apk --no-cache --virtual build-dependencies add\
-    git\
-    && npm install\
-    && apk del build-dependencies
+RUN npm install
     
 COPY ./ /app/
 #RUN CI=true npm test
