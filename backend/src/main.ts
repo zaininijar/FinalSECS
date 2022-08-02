@@ -11,7 +11,8 @@ async function bootstrap() {
 
   app.enableCors({
     origin: [
-      'http://localhost:3006'
+      'http://localhost:3006',
+      'https://secs-web.kamari.web.id'
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
