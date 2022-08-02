@@ -9,28 +9,28 @@ import { MatkulMahasiswaService } from './matkul_mahasiswa.service';
 export class MatkulMahasiswaController {
     constructor(private matkulMahasiswaService: MatkulMahasiswaService){}
 
-    @Get('me')
-    getMatkulMe(
-        @GetUser('data') userData
-    ){
-        return this.matkulMahasiswaService.getMatkulMe(userData['status'], userData['id'])
-    }
+    // @Get('me')
+    // getMatkulMe(
+    //     @GetUser('data') userData
+    // ){
+    //     return this.matkulMahasiswaService.getMatkulMe(userData['status'], userData['id'])
+    // }
 
-    @Post('me')
-    createMatkulMe(
-        @GetUser('data') userData,
-        @Body() dto: CreateMatkulMeDto
-    ){
-        return this.matkulMahasiswaService.createMatkulMe(userData['status'], userData['id'], dto)
-    }
+    // @Post('me')
+    // createMatkulMe(
+    //     @GetUser('data') userData,
+    //     @Body() dto: CreateMatkulMeDto
+    // ){
+    //     return this.matkulMahasiswaService.createMatkulMe(userData['status'], userData['id'], dto)
+    // }
 
-    @Delete('me/:id')
-    deleteMatkulMeById(
-        @GetUser('data') userData,
-        @Param('id', ParseIntPipe) matkulMeId: number,
-    ){
-        return this.matkulMahasiswaService.deleteMatkulMeById(userData['status'], userData['id'], matkulMeId)
-    }
+    // @Delete('me/:id')
+    // deleteMatkulMeById(
+    //     @GetUser('data') userData,
+    //     @Param('id', ParseIntPipe) matkulMeId: number,
+    // ){
+    //     return this.matkulMahasiswaService.deleteMatkulMeById(userData['status'], userData['id'], matkulMeId)
+    // }
     
     @Get()
     getMatkulMahasiswa(@GetUser('data') userData: string){

@@ -223,7 +223,7 @@ export class NilaiService {
             }
         })
 
-        if(!matkul.semester){
+        if(matkul.matkulPilihan){
             const matkulMahasiswa = await this.prisma.matakuliahMahasiswa.findFirst({
                 where: {
                     mahasiswa_id: dto.mahasiswa_id,
