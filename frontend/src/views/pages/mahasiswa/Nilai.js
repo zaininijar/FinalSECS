@@ -51,45 +51,6 @@ const Nilai = () => {
     });
   }, []);
 
-  // const getGrade = (nilai) => {
-  //   let result = "";
-  //   switch (true) {
-  //     case nilai < 40:
-  //       result = "E";
-  //       break;
-  //     case nilai >= 40 && nilai < 50:
-  //       result = "D";
-  //       break;
-  //     case nilai >= 50 && nilai < 55:
-  //       result = "C-";
-  //       break;
-  //     case nilai >= 55 && nilai < 60:
-  //       result = "C";
-  //       break;
-  //     case nilai >= 60 && nilai < 65:
-  //       result = "C+";
-  //       break;
-  //     case nilai >= 65 && nilai < 70:
-  //       result = "B-";
-  //       break;
-  //     case nilai >= 70 && nilai < 75:
-  //       result = "B";
-  //       break;
-  //     case nilai >= 75 && nilai < 80:
-  //       result = "B+";
-  //       break;
-  //     case nilai >= 80 && nilai < 85:
-  //       result = "A-";
-  //       break;
-  //     case nilai >= 85:
-  //       result = "A";
-  //       break;
-  //     default:
-  //       result = "Input nilai tidak sesuai....";
-  //   }
-  //   return result;
-  // };
-
   //DataTable Nilai MHS Column
   const nilaiColumns = [
     {
@@ -116,7 +77,9 @@ const Nilai = () => {
           <DataTable
             columns={nilaiColumns}
             data={nilaiMe && nilaiMe}
-            title={<span className="fs-6">Nilai Saya</span>}
+            title={
+              <span className="fs-6">Nilai Saya{process.env.API_URL}</span>
+            }
             defaultSortFieldID={1}
             pagination
             selectableRows

@@ -4,7 +4,6 @@ import { Authenticated, Guest } from "./middleware";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 import "./scss/style.scss";
 import "izitoast-react/dist/iziToast.css";
-
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>

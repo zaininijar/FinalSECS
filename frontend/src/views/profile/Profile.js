@@ -23,13 +23,7 @@ const Profile = () => {
         </CCol>
       </CRow>
       <CRow>
-        <CCol sm={2}>
-          <img src={avatar8} class="img-thumbnail" alt="profile photo" />
-          <CButton color="secondary" className="me-2 mt-2 w-full text-xs px-4">
-            Change Photo
-          </CButton>
-        </CCol>
-        <CCol sm={10}>
+        <CCol sm={12}>
           <CCard>
             <CCardBody>
               <div className="fs-4 capitalize">
@@ -43,10 +37,6 @@ const Profile = () => {
                 Joined At : {dateFormatter(authenticated.user.createdAt)}
               </div>
             </CCardBody>
-            <CCardFooter>
-              <CButton className="me-2">Update Profile</CButton>
-              <CButton variant="outline">Update Password</CButton>
-            </CCardFooter>
           </CCard>
         </CCol>
       </CRow>
