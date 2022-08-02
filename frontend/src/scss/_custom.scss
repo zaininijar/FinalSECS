@@ -1,6 +1,10 @@
 // Here you can add other styles
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap');
 
+body {
+    font-family: 'Montserrat', sans-serif;
+}
+
 .cs-bg-dark {
     background-color: $black;
 }
@@ -143,4 +147,30 @@
 
 .w-full {
     width: 100%;
+}
+
+.bg-telu {
+    background-image: url('../assets/images/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+}
+
+.filter-dark {
+    filter: blur(100px);
 }

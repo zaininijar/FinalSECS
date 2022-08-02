@@ -14,6 +14,7 @@ const Modal = ({
   btnColor,
   modalTitle,
   btnClass,
+  size = "",
   onClick = () => {},
   onSubmit = () => {},
 }) => {
@@ -30,7 +31,7 @@ const Modal = ({
       >
         {btnTitle}
       </CButton>
-      <CModal visible={visible} onClose={() => setVisible(false)}>
+      <CModal size={size} visible={visible} onClose={() => setVisible(false)}>
         <CModalHeader>
           <CModalTitle>{modalTitle}</CModalTitle>
         </CModalHeader>
@@ -46,21 +47,23 @@ const Modal = ({
           >
             Close
           </CButton>
-          <CButton
-            color="primary"
-            onClick={() => {
-              onSubmit().then((res) => {
-                if (res || res === undefined) {
-                  setVisible(false);
-                } else {
-                  setVisible(true);
-                }
-              });
-            }}
-            size="sm"
-          >
-            Save changes
-          </CButton>
+          {onSubmit && (
+            <CButton
+              color="primary"
+              onClick={() => {
+                onSubmit().then((res) => {
+                  if (res || res === undefined) {
+                    setVisible(false);
+                  } else {
+                    setVisible(true);
+                  }
+                });
+              }}
+              size="sm"
+            >
+              Save changes
+            </CButton>
+          )}
         </CModalFooter>
       </CModal>
     </>

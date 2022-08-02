@@ -84,7 +84,7 @@ content-type: application/json
 
 ###get mahasiswa
 GET http://localhost:3000/mahasiswa
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkwNjY5ODUsImV4cCI6MTY1OTE1MzM4NX0.tQwWjd0wq1Z7Ob_Rbpn4lRfWlGZTr9adqW5rK8ECkn8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTk0MTEyNDAsImV4cCI6MTY1OTQ5NzY0MH0.pILINdpYnHyPfx6rkx-5rsi1jYeTEq1kXCfq9FiAVdQ
 
 ###delete mahasiswa
 DELETE http://localhost:3000/mahasiswa/1
@@ -162,4 +162,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuY
 {
     "mahasiswa_id": 1,
     "matkul_id": 1,
+}
+
+###nilai
+POST http://localhost:3000/nilai
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXJuYW1lIjoic2FuZGlrYTIyIiwiaWF0IjoxNjU5NDExMTMzLCJleHAiOjE2NTk0OTc1MzN9.KizT4mS03_HgGV5N13vtV9g-0bOHgC4GsSGeaCACd3E
+
+{
+    "mahasiswa_id": 1,
+    "jadwal_id": 1,
+    "nilai": 90
 }

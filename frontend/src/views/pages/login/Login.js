@@ -16,6 +16,7 @@ import { useAuthenticated } from "src/store/index";
 
 const Login = () => {
   const LOGIN_URL = "/auth/signin";
+  const USER_ME_URL = "/users/me";
   const navigate = useNavigate();
   const [inputType, setInputType] = useState("password");
   const [username, setUsername] = useState({ msgErr: "", value: "" });
@@ -27,7 +28,7 @@ const Login = () => {
   const getUser = async (access_token) => {
     let user = null;
     await axios
-      .get("http://localhost:3000/users/me", {
+      .get(USER_ME_URL, {
         headers: {
           Authorization: "Bearer " + access_token,
         },

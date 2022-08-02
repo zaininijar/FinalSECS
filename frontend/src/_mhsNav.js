@@ -1,31 +1,7 @@
 import React from "react";
 import CIcon from "@coreui/icons-react";
-import AccountSchoolOutlineIcon from "mdi-react/AccountSchoolOutlineIcon";
-import HumanMaleBoardIcon from "mdi-react/HumanMaleBoardIcon";
-import {
-  cilBell,
-  cilCalculator,
-  cilCameraControl,
-  cilChartPie,
-  cilCursor,
-  cilDescription,
-  cilDrop,
-  cilFork,
-  cilLan,
-  cilLibrary,
-  cilNotes,
-  cilPencil,
-  cilPeople,
-  cilPuzzle,
-  cilScrubber,
-  cilSpeedometer,
-  cilSpreadsheet,
-  cilStar,
-  cilUsb,
-  cilUser,
-  cilUserFollow,
-} from "@coreui/icons";
-import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
+import { cilCalculator, cilSpeedometer, cilUser } from "@coreui/icons";
+import { CNavItem } from "@coreui/react";
 
 const _userNav = [
   {
