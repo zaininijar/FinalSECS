@@ -1,6 +1,11 @@
 import React from "react";
 import CIcon from "@coreui/icons-react";
-import { cilCalculator, cilSpeedometer, cilUser } from "@coreui/icons";
+import {
+  cilDescription,
+  cilInput,
+  cilSpeedometer,
+  cilUser,
+} from "@coreui/icons";
 import { CNavItem } from "@coreui/react";
 
 const _userNav = [
@@ -10,21 +15,23 @@ const _userNav = [
     to: "/dashboard",
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
   },
+  // {
+  //   component: CNavItem,
+  //   name: "Jadwal",
+  //   to: "/mahasiswa-jadwal",
+  //   icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
+  // },
+  {
+    component: CNavItem,
+    name: "Nilai",
+    to: "/mahasiswa-nilai",
+    icon: <CIcon icon={cilInput} customClassName="nav-icon" />,
+  },
   {
     component: CNavItem,
     name: "Profile",
     to: "/profile",
     icon: <CIcon icon={cilUser} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
-    name: "Widgets",
-    to: "/widgets",
-    icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
-    badge: {
-      color: "info",
-      text: "NEW",
-    },
   },
 ];
 

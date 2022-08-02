@@ -228,7 +228,7 @@ const Nilai = () => {
         {
           mahasiswa_id: id,
           jadwal_id: jadwalId,
-          nilai: mhsNilai,
+          nilai: getGrade(mhsNilai),
         },
         {
           headers: { Authorization: `Bearer ${access_token}` },
@@ -251,7 +251,7 @@ const Nilai = () => {
       .put(
         NILAI_URL + id,
         {
-          nilai: mhsNilai,
+          nilai: getGrade(mhsNilai),
         },
         {
           headers: { Authorization: `Bearer ${access_token}` },
@@ -280,6 +280,30 @@ const Nilai = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const getGrade = (nilai) => {
+    let result = "";
+    switch (true) {
+      case nilai < 40:
+        result = "E";
+        break;
+      case nilai >= 40 && nilai < 55:
+        result = "D";
+        break;
+      case nilai >= 55 && nilai < 70:
+        result = "C";
+        break;
+      case nilai >= 70 && nilai < 85:
+        result = "B";
+        break;
+      case nilai >= 85:
+        result = "A";
+        break;
+      default:
+        result = "Input nilai tidak sesuai....";
+    }
+    return result;
   };
 
   //DataTable

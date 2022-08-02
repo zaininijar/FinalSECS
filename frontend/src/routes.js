@@ -36,6 +36,14 @@ const Jadwal = React.lazy(() => import("./views/jadwal/Jadwal"));
 const DosenJadwal = React.lazy(() => import("./views/pages/dosen/Jadwal"));
 const DosenNilai = React.lazy(() => import("./views/pages/dosen/Nilai"));
 
+//Mahasiswa Jadwal
+const MahasiswaJadwal = React.lazy(() =>
+  import("./views/pages/mahasiswa/Jadwal")
+);
+const MahasiswaNilai = React.lazy(() =>
+  import("./views/pages/mahasiswa/Nilai")
+);
+
 const routes = [
   { path: "/", exact: true, name: "Home" },
   { path: "/dashboard", name: "Dashboard", element: Dashboard },
@@ -77,6 +85,12 @@ const routes = [
 
   //dosen-nilai
   { path: "/dosen-nilai", name: "Nilai", element: DosenNilai },
+
+  //mahasiswa-jadwal
+  { path: "/mahasiswa-jadwal", name: "Jadwal", element: MahasiswaJadwal },
+
+  //mahasiswa-nilai
+  { path: "/mahasiswa-nilai", name: "Nilai", element: MahasiswaNilai },
 ];
 
 export default routes;
