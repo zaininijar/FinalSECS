@@ -12,7 +12,7 @@ someOtherfoler/
 *.o
 *.so
 .env
-
+/build
 *.so
 
 # Packages #

@@ -49,12 +49,12 @@ const routes = [
   { path: "/dashboard", name: "Dashboard", element: Dashboard },
 
   //mahasiswa
-  { path: "/mahasiswa", name: "Mahasiswa", element: Mahasiswa },
-  { path: "/mahasiswa/show", name: "Show", element: Mahasiswa },
+  // { path: "/mahasiswa", name: "Mahasiswa", element: Mahasiswa },
+  { path: "/mahasiswa", name: "Show", element: Mahasiswa },
 
   //dosen
   { path: "/dosen", name: "Mahasiswa", element: Dosen },
-  { path: "/dosen/show", name: "Show", element: Dosen },
+  // { path: "/dosen/show", name: "Show", element: Dosen },
 
   //jurusan
   { path: "/jurusan", name: "Jurusan", element: Jurusan },
@@ -66,7 +66,7 @@ const routes = [
   { path: "/matakuliah", name: "Matakuliah", element: Matakuliah },
   //matakuliah
   {
-    path: "/matakuliah/set-matakuliah",
+    path: "/set-matakuliah",
     name: "Set Matakuliah",
     element: MatakuliahMahasiswa,
   },
