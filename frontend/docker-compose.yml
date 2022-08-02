@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  secs-fe:
+    image: secs-fe:${TAG_VERSION}
+    container_name: secs-fe
+    build: .
+    restart: always
+    ports:
+      - "3005:80"

@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+    environment {
+        URL_PUBLISH = 'https://secs-web.kamari.web.id/'
+        IMAGE_DOCKER = 'secs-fe'
+        CHANNEL_SLACK = 'jenkins-notification'
+    }
+    stages {
+        stage('Send Notif Start'){
+            steps {
+                slackSend channel: "${CHANNEL_SLACK}", message: "${URL_PUBLISH} deploy START"
+            }
+        }
+        stage('Docker Down'){
+            steps {
+                sh '''#!/bin/bash
+                    TAG_VERSION=$((BUILD_NUMBER-1)) docker compose down
+                '''
+                sh '''#!/bin/bash
+                    docker image remove ${IMAGE_DOCKER}:$((BUILD_NUMBER-1)) --force
+                '''
+            }
+        }
+        stage('Build Docker'){
+            steps {
+                sh "TAG_VERSION=${BUILD_NUMBER} docker compose up -d"
+                sh 'docker image prune -a -f'
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'echo "Post build stage"'
+        }
+
+        success {
+            echo 'I succeeded!'
+            slackSend channel: "${CHANNEL_SLACK}", color: 'good', message: "${URL_PUBLISH} deploy SUCCESS"
+        }
+
+        unstable {
+            echo 'I am unstable :('
+        }
+
+        failure {
+            echo 'I failed :(('
+            slackSend channel: "${CHANNEL_SLACK}", color: 'danger', message: "${URL_PUBLISH} deploy FAILED"
+        }
+    }
+}
