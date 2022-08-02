@@ -26,30 +26,30 @@ const _nav = [
     name: "Users",
   },
   {
-    component: CNavGroup,
+    component: CNavItem,
     name: "Mahasiswa",
     to: "/mahasiswa",
     icon: <CIcon icon={cilPeople} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: "Show",
-        to: "/mahasiswa/show",
-      },
-    ],
+    // items: [
+    //   {
+    //     component: CNavItem,
+    //     name: "Show",
+    //     to: "/mahasiswa/show",
+    //   },
+    // ],
   },
   {
-    component: CNavGroup,
+    component: CNavItem,
     name: "Dosen",
     to: "/dosen",
     icon: <HumanMaleBoardIcon className="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: "Show",
-        to: "/dosen/show",
-      },
-    ],
+    // items: [
+    //   {
+    //     component: CNavItem,
+    //     name: "Show",
+    //     to: "/dosen/show",
+    //   },
+    // ],
   },
   {
     component: CNavTitle,
@@ -73,23 +73,18 @@ const _nav = [
     to: "/jadwal",
     icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
   },
+
   {
-    component: CNavGroup,
+    component: CNavItem,
     name: "Mata Kuliah",
     to: "/matakuliah",
     icon: <CIcon icon={cilLibrary} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: "Mata Kuliah",
-        to: "/matakuliah",
-      },
-      {
-        component: CNavItem,
-        name: "Set Matakuliah",
-        to: "/matakuliah/set-matakuliah",
-      },
-    ],
+  },
+  {
+    component: CNavItem,
+    name: "Set Matakuliah",
+    to: "/set-matakuliah",
+    icon: <CIcon icon={cilLibrary} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,

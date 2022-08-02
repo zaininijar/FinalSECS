@@ -1,5 +1,5 @@
 ### admin signup
-POST http://localhost:3000/auth/signup
+POST https://secs-api.kamari.web.id/auth/signup
 content-type: application/json
 
 {
