@@ -11,6 +11,7 @@ someOtherfoler/
 *.exe
 *.o
 *.so
+.env
 
 *.so
 

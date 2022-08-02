@@ -657,7 +657,7 @@ const Mahasiswa = () => {
                   onChange={(e) => {
                     handlePassword(e.target.value);
                   }}
-                  type="password"
+                  type="text"
                   id="password"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-sm"
@@ -674,7 +674,7 @@ const Mahasiswa = () => {
                   onChange={(e) => {
                     handleNim(e.target.value);
                   }}
-                  type="text"
+                  type="number"
                   id="nim"
                   aria-label="Sizing example input"
                   aria-describedby="inputGroup-sizing-sm"

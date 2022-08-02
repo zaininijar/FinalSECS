@@ -19,7 +19,8 @@ import "simplebar/dist/simplebar.min.css";
 
 // sidebar nav config
 import navigation from "../_nav";
-import userNavigation from "../_userNav";
+import mhsNav from "../_mhsNav";
+import dosenNav from "../_dosenNav";
 import { cilBell } from "@coreui/icons";
 import { useAuthenticated } from "src/store/index";
 
@@ -47,10 +48,12 @@ const AppSidebar = () => {
       </CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
-          {authenticated.user.status === "admin" ? (
+          {authenticated && authenticated.user.status === "admin" ? (
             <AppSidebarNav items={navigation} />
+          ) : authenticated.user.status === "dosen" ? (
+            <AppSidebarNav items={dosenNav} />
           ) : (
-            <AppSidebarNav items={userNavigation} />
+            <AppSidebarNav items={mhsNav} />
           )}
         </SimpleBar>
       </CSidebarNav>

@@ -130,6 +130,12 @@ export class DosenService{
             }
         })
 
+        const user = await this.prisma.user.findFirst({
+            where: {
+                id: dosen.user_id
+            }
+        })
+
         if(!dosen){
             throw new NotFoundException(
                 'Data Dosen Tidak Ditemukan'
@@ -139,25 +145,33 @@ export class DosenService{
         const checkNipDosen = await this.prisma.dosen.findFirst({
             where: {
                 nip: dto.nip
+            },
+            select: {
+                id: true
             }
         })
         
+
         if(checkNipDosen){
-            throw new BadRequestException(
-                `Dosen dengan NIP : ${dto.nip} Sudah ada`
-            )
-        }
+            if(checkNipDosen.id !== dosenId){
+                throw new BadRequestException(
+                    `Dosen dengan NIP : ${dto.nip} Sudah ada`
+                )
+            }
+        } 
         
         const checkUsernameUser = await this.prisma.user.findFirst({
             where: {
                 username: dto.username
             }
         })
-        
+
         if(checkUsernameUser){
-            throw new BadRequestException(
-                `User dengan username : ${dto.username} Sudah ada`
-            )
+            if(checkUsernameUser.username !== user.username){ 
+                throw new BadRequestException(
+                    `User dengan username : ${dto.username} Sudah ada`
+                )
+            }
         }
 
         const editDosen = await this.prisma.dosen.update({
