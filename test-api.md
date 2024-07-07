@@ -1,19 +1,27 @@
 ```markdown
-### Admin Signup
-**POST** `https://secs-api.kamari.web.id/auth/signup`  
-Content-Type: application/json
+# API Documentation
 
+## Authentication
+
+### Admin Signup
+**Endpoint:** `POST https://secs-api.kamari.web.id/auth/signup`  
+**Content-Type:** `application/json`
+
+**Request Body:**
 ```json
 {
     "username": "admin",
     "password": "secret123"
 }
 ```
+
+---
 
 ### Signin
-**POST** `http://localhost:3000/auth/signin`  
-Content-Type: application/json
+**Endpoint:** `POST http://localhost:3000/auth/signin`  
+**Content-Type:** `application/json`
 
+**Request Body:**
 ```json
 {
     "username": "admin",
@@ -21,15 +29,29 @@ Content-Type: application/json
 }
 ```
 
-### User Profile
-**GET** `http://localhost:3000/users/me`  
-Authorization: Bearer `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkwNjY5ODUsImV4cCI6MTY1OTE1MzM4NX0.tQwWjd0wq1Z7Ob_Rbpn4lRfWlGZTr9adqW5rK8ECkn8`
+---
+
+## User
+
+### Get User Profile
+**Endpoint:** `GET http://localhost:3000/users/me`  
+**Authorization:** `Bearer <token>`
+
+**Headers:**
+```plaintext
+Authorization: Bearer <token>
+```
+
+---
+
+## Dosen
 
 ### Create Dosen
-**POST** `http://localhost:3000/dosen`  
-Content-Type: application/json  
-Authorization: Bearer `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkwNjY5ODUsImV4cCI6MTY1OTE1MzM4NX0.tQwWjd0wq1Z7Ob_Rbpn4lRfWlGZTr9adqW5rK8ECkn8`
+**Endpoint:** `POST http://localhost:3000/dosen`  
+**Content-Type:** `application/json`  
+**Authorization:** `Bearer <token>`
 
+**Request Body:**
 ```json
 {
     "username": "NVXz4Aro7A",
@@ -39,6 +61,7 @@ Authorization: Bearer `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJu
 }
 ```
 
+**Alternative Request Body:**
 ```json
 {
     "username": "JiJB20qAzG",
@@ -48,15 +71,27 @@ Authorization: Bearer `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJu
 }
 ```
 
+---
+
 ### Get Dosen
-**GET** `http://localhost:3000/dosen`  
-Authorization: Bearer `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkwNjY5ODUsImV4cCI6MTY1OTE1MzM4NX0.tQwWjd0wq1Z7Ob_Rbpn4lRfWlGZTr9adqW5rK8ECkn8`
+**Endpoint:** `GET http://localhost:3000/dosen`  
+**Authorization:** `Bearer <token>`
+
+**Headers:**
+```plaintext
+Authorization: Bearer <token>
+```
+
+---
+
+## Mahasiswa
 
 ### Create Mahasiswa
-**POST** `http://localhost:3000/mahasiswa`  
-Authorization: Bearer `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkxNTE0MDQsImV4cCI6MTY1OTIzNzgwNH0.yE7IpVFv00SI8BQt7d7gRJOuDyfFl2b3VuGTLdlKoow`  
-Content-Type: application/json
+**Endpoint:** `POST http://localhost:3000/mahasiswa`  
+**Content-Type:** `application/json`  
+**Authorization:** `Bearer <token>`
 
+**Request Body:**
 ```json
 {
     "username": "TEST",
@@ -67,6 +102,7 @@ Content-Type: application/json
 }
 ```
 
+**Alternative Request Body:**
 ```json
 {
     "username": "rbkxlznqdu",
@@ -76,7 +112,6 @@ Content-Type: application/json
     "kelas_id": 1
 }
 ```
-
 ```json
 {
     "username": "IrPNV8EXYw",
@@ -86,7 +121,6 @@ Content-Type: application/json
     "kelas_id": 1
 }
 ```
-
 ```json
 {
     "username": "6nepjpGV79",
@@ -97,64 +131,163 @@ Content-Type: application/json
 }
 ```
 
+---
+
 ### Get Mahasiswa
-**GET** `http://localhost:3000/mahasiswa`  
-Authorization: Bearer `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTk0MTEyNDAsImV4cCI6MTY1OTQ5NzY0MH0.pILINdpYnHyPfx6rkx-5rsi1jYeTEq1kXCfq9FiAVdQ`
+**Endpoint:** `GET http://localhost:3000/mahasiswa`  
+**Authorization:** `Bearer <token>`
+
+**Headers:**
+```plaintext
+Authorization: Bearer <token>
+```
+
+---
 
 ### Delete Mahasiswa
-**DELETE** `http://localhost:3000/mahasiswa/1`  
-Authorization: Bearer `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg5NzQ1NjIsImV4cCI6MTY1OTA2MDk2Mn0.SDprG2ohfRbWNg8PyrKIn7rgrMsX4AAGEmBkePo0tAc`
+**Endpoint:** `DELETE http://localhost:3000/mahasiswa/1`  
+**Authorization:** `Bearer <token>`
 
-### Create Jurusan
-**POST** `http://localhost:3000/jurusan`  
-Authorization: Bearer `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkxNTE0MDQsImV4cCI6MTY1OTIzNzgwNH0.yE7IpVFv00SI8BQt7d7gRJOuDyfFl2b3VuGTLdlKoow`  
-Content-Type: application/json
-
-```json
-{
-    "nama_jurusan": "Desain Komunikasi Visual(DKV)"
-}
+**Headers:**
+```plaintext
+Authorization: Bearer <token>
 ```
 
-```json
-{
-    "nama_jurusan": "Teknik Informatika(TI)"
-}
-```
-
-```json
-{
-    "nama_jurusan": "Sistem Informasi(SI)"
-}
-```
-
-```json
-{
-    "nama_jurusan": "Teknik Elektro(TE)"
-}
-```
-
-### Get Jurusan
-**GET** `http://localhost:3000/jurusan`  
-Authorization: Bearer `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkwNjY5ODUsImV4cCI6MTY1OTE1MzM4NX0.tQwWjd0wq1Z7Ob_Rbpn4lRfWlGZTr9adqW5rK8ECkn8`  
-Content-Type: application/json
-
-### Get Kelas
-**GET** `http://localhost:3000/kelas`  
-Authorization: Bearer `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTkwNjY5ODUsImV4cCI6MTY1OTE1MzM4NX0.tQwWjd0wq1Z7Ob_Rbpn4lRfWlGZTr9adqW5rK8ECkn8`  
-Content-Type: application/json
+---
 
 ### Update Mahasiswa Password
-**PUT** `http://localhost:3000/mahasiswa/9`  
-Authorization: Bearer `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg5NzQ1NjIsImV4cCI6MTY1OTA2MDk2Mn0.SDprG2ohfRbWNg8PyrKIn7rgrMsX4AAGEmBkePo0tAc`  
-Content-Type: application/json
+**Endpoint:** `PUT http://localhost:3000/mahasiswa/9`  
+**Content-Type:** `application/json`  
+**Authorization:** `Bearer <token>`
 
+**Request Body:**
 ```json
 {
     "password": "test"
 }
 ```
 
+---
+
+## Jurusan
+
+### Create Jurusan
+**Endpoint:** `POST http://localhost:3000/jurusan`  
+**Content-Type:** `application/json`  
+**Authorization:** `Bearer <token>`
+
+**Request Body:**
+```json
+{
+    "nama_jurusan": "Desain Komunikasi Visual(DKV)"
+}
+```
+
+**Alternative Request Body:**
+```json
+{
+    "nama_jurusan": "Teknik Informatika(TI)"
+}
+```
+```json
+{
+    "nama_jurusan": "Sistem Informasi(SI)"
+}
+```
+```json
+{
+    "nama_jurusan": "Teknik Elektro(TE)"
+}
+```
+
+---
+
+### Get Jurusan
+**Endpoint:** `GET http://localhost:3000/jurusan`  
+**Authorization:** `Bearer <token>`
+
+**Headers:**
+```plaintext
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+---
+
+## Kelas
+
+### Get Kelas
+**Endpoint:** `GET http://localhost:3000/kelas`  
+**Authorization:** `Bearer <token>`
+
+**Headers:**
+```plaintext
+Authorization: Bearer <token>
+Content-Type: application/json
+```
+
+---
+
 ### Update Kelas
-**PUT** `http://localhost:3000/kelas/14`  
-Authorization: Bearer `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoiYWRtaW4iLCJpYXQiOjE2NTg5NzQ1NjIsImV4cCI6MTY1OTA2MDk2Mn0.SDprG2ohfRbWNg8PyrKIn7rgrMsX4AAGEmBke
+**Endpoint:** `PUT http://localhost:3000/kelas/14`  
+**Authorization:** `Bearer <token>`
+
+**Request Body:**
+```json
+{
+    "nama_kelas": "testupdate",
+    "jurusan_id": 1
+}
+```
+
+---
+
+## Matakuliah
+
+### Get Matakuliah
+**Endpoint:** `GET http://localhost:3000/matakuliah/1`  
+**Authorization:** `Bearer <token>`
+
+**Headers:**
+```plaintext
+Authorization: Bearer <token>
+```
+
+### Get Matakuliah Mahasiswa
+**Endpoint:** `GET http://localhost:3000/matakuliah-mahasiswa`  
+**Authorization:** `Bearer <token>`
+
+**Headers:**
+```plaintext
+Authorization: Bearer <token>
+```
+
+### Create Matakuliah Mahasiswa
+**Endpoint:** `POST http://localhost:3000/matakuliah-mahasiswa`  
+**Authorization:** `Bearer <token>`
+
+**Request Body:**
+```json
+{
+    "mahasiswa_id": 1,
+    "matkul_id": 1
+}
+```
+
+---
+
+## Nilai
+
+### Create Nilai
+**Endpoint:** `POST http://localhost:3000/nilai`  
+**Authorization:** `Bearer <token>`
+
+**Request Body:**
+```json
+{
+    "mahasiswa_id": 1,
+    "jadwal_id": 1,
+    "nilai": 90
+}
+```
+```
